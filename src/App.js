@@ -1,14 +1,17 @@
 import logo from './logo.svg';
 import './App.css';
 import PdfViewerComponent from './components/PdfViewerComponent';
+import React from 'react';
+
 
 function App() {
+  
   return (
-    <div className="App">
-     
+    <div className="App">     
+      
       <PdfViewerComponent
 				document={"2045.pdf"}
-			/>
+			/>             
     </div>
   );
 }

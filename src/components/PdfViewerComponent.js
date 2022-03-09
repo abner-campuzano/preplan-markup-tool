@@ -1,7 +1,8 @@
 import { useEffect, useRef } from "react";
+import { CustomContainer } from "./DragAndDropComponent/DragAndDrop";
 
 export default function PdfViewerComponent(props) {
-    const containerRef = useRef(null);
+    const containerRef = useRef(CustomContainer);
 
     useEffect(() => {
         const container = containerRef.current;
