@@ -1,17 +1,11 @@
-import logo from './logo.svg';
 import './App.css';
-import PdfViewerComponent from './components/PdfViewerComponent';
 import React from 'react';
+import { CustomContainer } from './components/DragAndDropComponent/DragAndDrop';
 
-
-function App() {
-  
+function App() {  
   return (
     <div className="App">     
-      
-      <PdfViewerComponent
-				document={"2045.pdf"}
-			/>             
+      <CustomContainer/>    
     </div>
   );
 }

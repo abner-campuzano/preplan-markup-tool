@@ -1,5 +1,6 @@
 import PSPDFKit from "pspdfkit";
 import * as React from "react";
+import PdfViewerComponent from "../PdfViewerComponent";
 
 // Assign the PSPDFKit instance to a module variable so we can access it
 // everywhere.
@@ -11,7 +12,8 @@ let isDragAndDropSupported = false;
 
 export function load(defaultConfiguration) {
   // We first find out how much space we have available. Based on that, we
-  // decide wether to turn on the sidebar or not.
+  // decide wether to turn on the sidebar or not.  
+
   const viewWidth = document
     .querySelector(".splitPane")
     .getBoundingClientRect().width;
@@ -19,16 +21,43 @@ export function load(defaultConfiguration) {
   // We start by initializing an initial ViewState that hides all toolbars,
   // opens the thumbnail sidebar, and places the sidebar on the other side.
   const initialViewState = new PSPDFKit.ViewState({
-    showToolbar: false,
+    showToolbar: true,
     enableAnnotationToolbar: false,
     sidebarMode: viewWidth > 1100 ? PSPDFKit.SidebarMode.THUMBNAILS : null,
     sidebarPlacement: PSPDFKit.SidebarPlacement.END,
+  });
+
+  //Customize Toolbar
+  const toolbarItems = PSPDFKit.defaultToolbarItems.filter((item) => {
+    return /\b(sidebar-bookmarks|sidebar-thumbnails|zoom-in|zoom-out|text-highlighter|highlighter|line|rectangle|note|arrow|ellipse|polygon)\b/.test(
+      item.type
+    );
+  });
+
+  toolbarItems.push({
+    type: "spacer",
+  });
+
+  // A custom item. Inside the onPress callback we can call into PSPDFKit APIs.
+  toolbarItems.push({
+    type: "custom",
+    id: "my-custom-button",
+    title: "click me",
+    onPress: function () {
+      alert(
+        "Hello from PSPDFKit " +
+          PSPDFKit.version +
+          "\nYou are at page " +
+          instance.viewState.currentPageIndex
+      );
+    },
   });
 
   // Initialize a new PSPDFKit Viewer with the initial view state and custom
   // stylesheets.
   return PSPDFKit.load({
     ...defaultConfiguration,
+    toolbarItems: toolbarItems,
     initialViewState,
     styleSheets: ["/drag-and-drop/static/style.css"],
     annotationTooltipCallback,
@@ -268,7 +297,7 @@ function annotationTooltipCallback(annotation) {
     type: "custom",
     title: "Delete",
     onPress: async () => {
-      if (confirm("Do you really want to delete the annotation?")) {
+      if (window.confirm("Do you really want to delete the annotation?")) {
         await instance.delete(annotation.id);
       }
     },
@@ -321,8 +350,8 @@ function parseImageDimensions(file, onDimensions) {
 
 const tools = [
   { type: "image", filename: "logo192.png" },
-  { type: "text", text: "Best Price" },
-  { type: "text", text: "Top Service" },
+  { type: "image", filename: "logo192.png" },
+  { type: "image", filename: "logo192.png" },
 ];
 
 // By exporting a CustomContainer, we can customize the HTML structure that is
@@ -338,8 +367,8 @@ export const CustomContainer = React.forwardRef((instance, ref) => (
             <div key={tool.filename} className="image-tool tool">
               <img
                 src={tool.filename}
-                width="220"
-                height="217"
+                width="100"
+                height="100"
                 onDragStart={setDragImageData}
                 onClick={handleImageClick}
                 draggable
@@ -361,7 +390,9 @@ export const CustomContainer = React.forwardRef((instance, ref) => (
         }
       })}
     </div>
-    <div className="splitPane-right" ref={ref} />
+    <div className="splitPane-right" ref={ref}>
+      <PdfViewerComponent 	document={"2045.pdf"}/>
+    </div>
 
     <style jsx>{`
       .splitPane {
@@ -410,7 +441,7 @@ export const CustomContainer = React.forwardRef((instance, ref) => (
 
       @media only screen and (min-width: 768px) {
         .splitPane-left {
-          width: 300px;
+          width: 150px;
           height: 100vh;
           overflow-y: auto;
           -webkit-overflow-scrolling: touch;
