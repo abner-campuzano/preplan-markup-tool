@@ -22,7 +22,7 @@ export function load(defaultConfiguration) {
   // opens the thumbnail sidebar, and places the sidebar on the other side.
   const initialViewState = new PSPDFKit.ViewState({
     showToolbar: true,
-    enableAnnotationToolbar: false,
+    enableAnnotationToolbar: true,
     sidebarMode: viewWidth > 1100 ? PSPDFKit.SidebarMode.THUMBNAILS : null,
     sidebarPlacement: PSPDFKit.SidebarPlacement.END,
   });
@@ -120,7 +120,7 @@ function handleExternalDrop(event, pageIndex) {
     // External drag and drop items will have the cursor in the middle of the
     // bounding box.
     // We also scale the image so that the aspect ratio is kept.
-    const width = 220;
+    const width = 75;
     const height = width * ratio;
 
     const clientRect = new PSPDFKit.Geometry.Rect({
@@ -150,8 +150,8 @@ function handleInternalDrop(event, pageIndex) {
   const clientRect = new PSPDFKit.Geometry.Rect({
     left: event.clientX,
     top: event.clientY,
-    width: 220,
-    height: 217,
+    width: 500,
+    height: 500,
   });
   const pageRect = instance.transformContentClientToPageSpace(
     clientRect,
@@ -349,9 +349,37 @@ function parseImageDimensions(file, onDimensions) {
 }
 
 const tools = [
-  { type: "image", filename: "logo192.png" },
-  { type: "image", filename: "logo192.png" },
-  { type: "image", filename: "logo192.png" },
+  { type: "image", filename: "drag-and-drop/preplan_icons/image003.png" },
+  { type: "image", filename: "drag-and-drop/preplan_icons/image032.png" },
+  { type: "image", filename: "drag-and-drop/preplan_icons/image033.png" },
+  { type: "image", filename: "drag-and-drop/preplan_icons/image034.png" },
+  { type: "image", filename: "drag-and-drop/preplan_icons/image035.png" },
+  { type: "image", filename: "drag-and-drop/preplan_icons/image036.png" },
+  { type: "image", filename: "drag-and-drop/preplan_icons/image037.png" },
+  { type: "image", filename: "drag-and-drop/preplan_icons/image038.png" },
+  { type: "image", filename: "drag-and-drop/preplan_icons/image039.png" },
+  { type: "image", filename: "drag-and-drop/preplan_icons/image040.png" },
+  { type: "image", filename: "drag-and-drop/preplan_icons/image041.png" },
+  { type: "image", filename: "drag-and-drop/preplan_icons/image042.png" },
+  { type: "image", filename: "drag-and-drop/preplan_icons/image043.png" },
+  { type: "image", filename: "drag-and-drop/preplan_icons/image044.png" },
+  { type: "image", filename: "drag-and-drop/preplan_icons/image045.png" },
+  { type: "image", filename: "drag-and-drop/preplan_icons/image046.png" },
+  { type: "image", filename: "drag-and-drop/preplan_icons/image047.png" },
+  { type: "image", filename: "drag-and-drop/preplan_icons/image048.png" },
+  { type: "image", filename: "drag-and-drop/preplan_icons/image049.png" },
+  { type: "image", filename: "drag-and-drop/preplan_icons/image050.png" },
+  { type: "image", filename: "drag-and-drop/preplan_icons/image051.png" },
+  { type: "image", filename: "drag-and-drop/preplan_icons/image052.png" },
+  { type: "image", filename: "drag-and-drop/preplan_icons/image053.png" },
+  { type: "image", filename: "drag-and-drop/preplan_icons/image054.png" },
+  { type: "image", filename: "drag-and-drop/preplan_icons/image055.png" },
+  { type: "image", filename: "drag-and-drop/preplan_icons/image056.png" },
+  { type: "image", filename: "drag-and-drop/preplan_icons/image057.png" },
+  { type: "image", filename: "drag-and-drop/preplan_icons/image058.png" },
+  { type: "image", filename: "drag-and-drop/preplan_icons/image059.png" },
+  { type: "image", filename: "drag-and-drop/preplan_icons/image060.png" },
+  { type: "image", filename: "drag-and-drop/preplan_icons/image061.png" }
 ];
 
 // By exporting a CustomContainer, we can customize the HTML structure that is
@@ -367,8 +395,8 @@ export const CustomContainer = React.forwardRef((instance, ref) => (
             <div key={tool.filename} className="image-tool tool">
               <img
                 src={tool.filename}
-                width="100"
-                height="100"
+                //width="50"
+                //height="50"
                 onDragStart={setDragImageData}
                 onClick={handleImageClick}
                 draggable
@@ -478,9 +506,7 @@ export const CustomContainer = React.forwardRef((instance, ref) => (
         }
 
         .tool,
-        .tool > img {
-          width: 110px;
-          height: 108px;
+        .tool > img {          
           display: inline-block;
         }
 
