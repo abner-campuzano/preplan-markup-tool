@@ -6,7 +6,7 @@ export default function PdfViewerComponent(props,ref) {
 
     useEffect(() => {
         const container = containerRef.current;
-        let instance, PSPDFKit;
+        let PSPDFKit;
 
         (async function () {
             PSPDFKit = await import("pspdfkit");
