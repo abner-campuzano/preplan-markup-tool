@@ -394,6 +394,7 @@ export const CustomContainer = React.forwardRef((instance, ref) => (
           return (
             <div key={tool.filename} className="image-tool tool">
               <img
+              alt="Icon Missing"
                 src={tool.filename}
                 //width="50"
                 //height="50"
