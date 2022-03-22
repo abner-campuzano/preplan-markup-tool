@@ -12,8 +12,7 @@ let isDragAndDropSupported = false;
 
 export function load(defaultConfiguration) {
   // We first find out how much space we have available. Based on that, we
-  // decide wether to turn on the sidebar or not.  
-
+  // decide wether to turn on the sidebar or not. 
   const viewWidth = document
     .querySelector(".splitPane")
     .getBoundingClientRect().width;
