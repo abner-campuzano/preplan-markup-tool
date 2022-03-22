@@ -33,7 +33,7 @@ jobs:
           path: .
 
   deploy:
-    runs-on: ubuntu-la
+    runs-on: ubuntu-latest
     needs: build
     environment:
       name: 'Production'
