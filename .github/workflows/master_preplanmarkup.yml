@@ -24,12 +24,7 @@ jobs:
       - name: npm install, build, and test
         run: |
           npm install
-          npm run build --if-present
-          
-      - name: add process.json
-        run: |
-          echo '{ script: "serve", env: { PM2_SERVE_SPA: "true", PM2_SERVE_HOMEPAGE: "/index.html" } }' >> build/process.json
-    
+          npm run build --if-present             
           
       - name: Zip artifact for deployment
         run: zip release.zip ./* -r
