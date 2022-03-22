@@ -10,7 +10,7 @@ export default function PdfViewerComponent(props,ref) {
 
         (async function () {
             PSPDFKit = await import("pspdfkit");
-            instance = await load({
+            await load({
                 // Container where PSPDFKit should be mounted.
                 container,
                 // The document to open.
@@ -21,8 +21,9 @@ export default function PdfViewerComponent(props,ref) {
 
         })();
 
+
         return () => PSPDFKit && PSPDFKit.unload(container);
-    }, []);
+    });
 
     return (
         <div ref={containerRef} style={{ width: "100%", height: "100vh" }} />
