@@ -1,8 +1,8 @@
 import { useEffect, useRef } from "react";
-import { load } from "./DragAndDropComponent/DragAndDrop";
+import { CustomContainer, load } from "./DragAndDropComponent/DragAndDrop";
 
-export default function PdfViewerComponent(props,ref) {
-    const containerRef = useRef(ref);
+export default function PdfViewerComponent(props) {
+    const containerRef = useRef();
 
     useEffect(() => {
         const container = containerRef.current;
@@ -17,7 +17,7 @@ export default function PdfViewerComponent(props,ref) {
                 document: props.document,
                 // Use the public directory URL as a base URL. PSPDFKit will download its library assets from here.
                 baseUrl: `${window.location.protocol}//${window.location.host}/${process.env.PUBLIC_URL}`
-            });           
+            });
 
         })();
 
@@ -26,6 +26,6 @@ export default function PdfViewerComponent(props,ref) {
     });
 
     return (
-        <div ref={containerRef} style={{ width: "100%", height: "100vh" }} />
+        <CustomContainer ref={containerRef} />
     );
 }

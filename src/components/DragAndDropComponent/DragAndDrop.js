@@ -1,6 +1,5 @@
 import PSPDFKit from "pspdfkit";
 import * as React from "react";
-import PdfViewerComponent from "../PdfViewerComponent";
 
 // Assign the PSPDFKit instance to a module variable so we can access it
 // everywhere.
@@ -419,10 +418,10 @@ export const CustomContainer = React.forwardRef((instance, ref) => (
       })}
     </div>
     <div className="splitPane-right" ref={ref}>
-      <PdfViewerComponent 	document={"2045.pdf"}/>
+      
     </div>
 
-    <style jsx>{`
+    <style jsx="true">{`
       .splitPane {
         width: 100%;
         height: 100%;
