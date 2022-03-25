@@ -2,7 +2,7 @@ import { BlobServiceClient } from "@azure/storage-blob";
 
 const get_preplan = (preplanId) => {
     const account = "preplanios";
-    const sas = "sp=r&st=2022-03-24T21:06:09Z&se=2035-03-25T05:06:09Z&spr=https&sv=2020-08-04&sr=c&sig=cphUawIIrWNAugWNdoeFTl1VyIXDjWTcnVsUyEY8DmY%3D";
+    const sas = "sp=r&st=2022-03-25T21:41:56Z&se=2032-03-26T05:41:56Z&spr=https&sv=2020-08-04&sr=c&sig=XrhOgs7oZS7aFuDHpTNlg0xlZOnTZ5oVJY%2BX6qakmq4%3D";
     const containerName = "preplans";
     const blobName = `${preplanId}.pdf`;
 
@@ -11,12 +11,10 @@ const get_preplan = (preplanId) => {
 
     const containerClient = blobServiceClient.getContainerClient(containerName);
     const blobClient = containerClient.getBlobClient(blobName);
-
-
     console.log("Blob CLient ");
     console.log(blobClient);
 
-    return blobClient.downloadToBuffer;
+    return blobClient.url;
 
     // // Get blob content from position 0 to the end
     // // In browsers, get downloaded data by accessing downloadBlockBlobResponse.blobBody
