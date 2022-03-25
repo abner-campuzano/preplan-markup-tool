@@ -2,7 +2,6 @@ import './App.css';
 import React from 'react';
 import PdfViewerComponent from './components/PdfViewerComponent';
 import queryString from 'query-string';
-import * as api_client from './services/api_client';
 
 export default function App() {
   const queryParams = queryString.parse(window.location.search);
