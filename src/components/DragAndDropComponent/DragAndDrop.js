@@ -40,15 +40,28 @@ export function load(defaultConfiguration) {
   toolbarItems.push({
     type: "custom",
     id: "my-custom-button",
-    title: "click me",
+    title: "Submit Changes",
     onPress: function () {
       alert(
-        "Hello from PSPDFKit " +
-          PSPDFKit.version +
-          "\nYou are at page " +
-          instance.viewState.currentPageIndex
+        "Sent to Preplan Team" +
+        PSPDFKit.version +
+        "\nYou are at page " +
+        instance.viewState.currentPageIndex
       );
-    },
+    }
+  });
+  toolbarItems.push({
+    type: "custom",
+    id: "my-custom-button2",
+    title: "No Changes",
+    onPress: function () {
+      alert(
+        "No changes" +
+        PSPDFKit.version +
+        "\nYou are at page " +
+        instance.viewState.currentPageIndex
+      );
+    }
   });
 
   // Initialize a new PSPDFKit Viewer with the initial view state and custom
@@ -392,7 +405,7 @@ export const CustomContainer = React.forwardRef((instance, ref) => (
           return (
             <div key={tool.filename} className="image-tool tool">
               <img
-              alt="Icon Missing"
+                alt="Icon Missing"
                 src={tool.filename}
                 //width="50"
                 //height="50"
@@ -418,7 +431,7 @@ export const CustomContainer = React.forwardRef((instance, ref) => (
       })}
     </div>
     <div className="splitPane-right" ref={ref}>
-      
+
     </div>
 
     <style jsx="true">{`
@@ -526,6 +539,6 @@ function closestByClass(el, className) {
   return el && el.classList && el.classList.contains(className)
     ? el
     : el
-    ? closestByClass(el.parentNode, className)
-    : null;
+      ? closestByClass(el.parentNode, className)
+      : null;
 }
