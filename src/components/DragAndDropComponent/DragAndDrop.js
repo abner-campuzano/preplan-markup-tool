@@ -1,5 +1,6 @@
 import PSPDFKit from "pspdfkit";
 import * as React from "react";
+import ArcGISHelper from "../../services/ArcGIS";
 
 // Assign the PSPDFKit instance to a module variable so we can access it
 // everywhere.
@@ -42,12 +43,7 @@ export function load(defaultConfiguration) {
     id: "my-custom-button",
     title: "Submit Changes",
     onPress: function () {
-      alert(
-        "Sent to Preplan Team" +
-        PSPDFKit.version +
-        "\nYou are at page " +
-        instance.viewState.currentPageIndex
-      );
+      ArcGISHelper.attatchPDFtoAssignment(instance);
     }
   });
   toolbarItems.push({
