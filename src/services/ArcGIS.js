@@ -4,7 +4,7 @@ const ArcGISHelper = {
 
 
         const arrayBuffer = await instance.exportPDF();
-        console.log(instance);
+        console.log(arrayBuffer);
         const blob = new Blob([arrayBuffer], { type: 'application/pdf' });
         console.log(blob);
         const formData = new FormData();

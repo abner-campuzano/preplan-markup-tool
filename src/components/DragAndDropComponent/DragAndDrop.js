@@ -37,10 +37,11 @@ export function load(defaultConfiguration) {
     type: "spacer",
   });
 
-  const downloadButton = {
+
+
+  toolbarItems.push({
     type: "custom",
     id: "download-pdf",
-    icon: "/download.svg",
     title: "Download",
     onPress: () => {
       instance.exportPDF().then((buffer) => {
@@ -61,9 +62,7 @@ export function load(defaultConfiguration) {
         }
       });
     }
-  };
-
-  toolbarItems.push({ downloadButton });
+  });
 
 
 
