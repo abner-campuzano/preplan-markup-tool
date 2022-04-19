@@ -37,6 +37,37 @@ export function load(defaultConfiguration) {
     type: "spacer",
   });
 
+  const downloadButton = {
+    type: "custom",
+    id: "download-pdf",
+    icon: "/download.svg",
+    title: "Download",
+    onPress: () => {
+      instance.exportPDF().then((buffer) => {
+        const blob = new Blob([buffer], { type: "application/pdf" });
+        const fileName = "document.pdf";
+        if (window.navigator.msSaveOrOpenBlob) {
+          window.navigator.msSaveOrOpenBlob(blob, fileName);
+        } else {
+          const objectUrl = URL.createObjectURL(blob);
+          const a = document.createElement("a");
+          a.href = objectUrl;
+          a.style = "display: none";
+          a.download = fileName;
+          document.body.appendChild(a);
+          a.click();
+          URL.revokeObjectURL(objectUrl);
+          document.body.removeChild(a);
+        }
+      });
+    }
+  };
+
+  toolbarItems.push({ downloadButton });
+
+
+
+
   // A custom item. Inside the onPress callback we can call into PSPDFKit APIs.
   toolbarItems.push({
     type: "custom",
