@@ -1,4 +1,4 @@
-import PSPDFKit from "pspdfkit";
+
 const ArcGISHelper = {
     attatchPDFtoAssignment: async function (instance) {
 
