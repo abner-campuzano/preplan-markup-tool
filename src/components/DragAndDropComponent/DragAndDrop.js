@@ -73,7 +73,7 @@ export function load(defaultConfiguration) {
     id: "my-custom-button",
     title: "Submit Changes",
     onPress: function () {
-      ArcGISHelper.attatchPDFtoAssignment(instance);
+      ArcGISHelper.attatchPDFtoAssignment(instance, defaultConfiguration.objectId);
     }
   });
   toolbarItems.push({

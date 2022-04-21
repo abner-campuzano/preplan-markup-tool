@@ -1,7 +1,8 @@
 
 const ArcGISHelper = {
-    attatchPDFtoAssignment: async function (instance) {
+    attatchPDFtoAssignment: async function (instance, objectId) {
 
+        console.log("objectId=" + objectId);
 
         const arrayBuffer = await instance.exportPDF();
         console.log(arrayBuffer);
@@ -12,7 +13,7 @@ const ArcGISHelper = {
         formData.append("attachment", blob);
         formData.append("f", "json");
         fetch(
-            "https://gis.southmetro.org/arcgis/rest/services/Hosted/assignments_b77065eb42c84954bf9b4897a2b042b1/FeatureServer/0/10443/addAttachment",
+            `https://gis.southmetro.org/arcgis/rest/services/Hosted/workforce_9bce7612ad40407881aefb4d6ced6232/FeatureServer/0/${objectId}/addAttachment`,
             {
                 method: "POST",
                 body: formData
