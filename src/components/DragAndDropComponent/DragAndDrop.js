@@ -386,7 +386,7 @@ function parseImageDimensions(file, onDimensions) {
 }
 
 const tools = [
-  { type: "image", filename: "drag-and-drop/preplan_icons/image052.png" },
+  { type: "image", filename: "drag-and-drop/preplan_icons/image052.jpg" },
   { type: "image", filename: "drag-and-drop/preplan_icons/image079.png" },
   { type: "image", filename: "drag-and-drop/preplan_icons/image080.png" },
   { type: "image", filename: "drag-and-drop/preplan_icons/image081.png" },
@@ -400,14 +400,14 @@ const tools = [
   { type: "image", filename: "drag-and-drop/preplan_icons/image089.png" },
   { type: "image", filename: "drag-and-drop/preplan_icons/image090.png" },
   { type: "image", filename: "drag-and-drop/preplan_icons/image091.png" },
-  { type: "image", filename: "drag-and-drop/preplan_icons/image092.png" },
-  { type: "image", filename: "drag-and-drop/preplan_icons/image093.png" },
-  { type: "image", filename: "drag-and-drop/preplan_icons/image094.png" },
+  { type: "image", filename: "drag-and-drop/preplan_icons/image092.jpg" },
+  { type: "image", filename: "drag-and-drop/preplan_icons/image093.jpg" },
+  { type: "image", filename: "drag-and-drop/preplan_icons/image094.jpg" },
   { type: "image", filename: "drag-and-drop/preplan_icons/image095.png" },
   { type: "image", filename: "drag-and-drop/preplan_icons/image096.png" },
-  { type: "image", filename: "drag-and-drop/preplan_icons/image097.png" },
-  { type: "image", filename: "drag-and-drop/preplan_icons/image098.png" },
-  { type: "image", filename: "drag-and-drop/preplan_icons/image099.png" },
+  { type: "image", filename: "drag-and-drop/preplan_icons/image097.jpg" },
+  { type: "image", filename: "drag-and-drop/preplan_icons/image098.jpg" },
+  { type: "image", filename: "drag-and-drop/preplan_icons/image099.jpg" },
   { type: "image", filename: "drag-and-drop/preplan_icons/image100.png" }
 ];
 
