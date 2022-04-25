@@ -1,3 +1,4 @@
+import { json } from "stream/consumers";
 
 const ArcGISHelper = {
 
@@ -21,7 +22,9 @@ const ArcGISHelper = {
                 body: formData
             });
 
-        token = response.json().token;
+        jsonResponse = await response.json()
+
+        token = jsonResponse.token;
 
         console.log("Token: ", token);
 
