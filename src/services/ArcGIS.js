@@ -21,7 +21,7 @@ const ArcGISHelper = {
                 body: formData
             });
 
-        token = response.token;
+        token = response.json().token;
 
         console.log("Token: ", token);
 
