@@ -7,7 +7,7 @@ const ArcGISHelper = {
         formData.append("username", "abner.campuzano@southmetro");
         formData.append("password", "Campuzano33911933");
         formData.append("client","referer");
-        formData.append("referer","https://gis.southmetro.org/arcgis");
+        formData.append("referer","https://ambitious-sand-0bf74c810.1.azurestaticapps.net");
         formData.append("expiration","10160")
         formData.append("f", "json");
         var response = await fetch(
