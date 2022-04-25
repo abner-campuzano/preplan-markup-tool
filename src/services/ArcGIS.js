@@ -37,7 +37,7 @@ const ArcGISHelper = {
         console.log(arrayBuffer);
         const blob = new Blob([arrayBuffer], { type: 'application/pdf' });
         console.log(blob);
-        const formData = new URLSearchParams();
+        const formData = new FormData();
         formData.append("token", await this.getToken());
         //formData.append("token", "UhKW5huFWlgSaFDp550RiMI5oCfET5qdrFtC_3ljzgKvFLOqrcVHhsHw1aC3dvHoGTzRe16_m9VBTZ5ILNRdKFBGVPVFl1E2uUFzxwS_eUUio4TONYlup3qiq3maN-RELTZqP4mkC1UpXYb2Ls39xlrtHrekUbS9n3Aj3nIhu0LMMHegy405CQTcCwDRxpX9NsnQCeKwTwVCe66yjmjwZt9b7H54Zwxi6XKCMat48eGQ2aEiwiDyjf134X0tyR0p");
         formData.append("attachment", blob);
@@ -45,10 +45,7 @@ const ArcGISHelper = {
         fetch(
             `https://gis.southmetro.org/arcgis/rest/services/Hosted/workforce_9bce7612ad40407881aefb4d6ced6232/FeatureServer/0/${objectId}/addAttachment`,
             {
-                method: "POST",
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded'
-                  }, 
+                method: "POST",                
                 referrerPolicy:"origin",
                 body: formData
             }).then(response => console.log(response.json()));
