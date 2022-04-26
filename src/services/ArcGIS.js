@@ -50,7 +50,7 @@ const ArcGISHelper = {
                     'Content-Type': 'multipart/form-data'
                     // 'Content-Type': 'application/x-www-form-urlencoded',
                 },
-                referrerPolicy: "same-origin",
+                //referrerPolicy: "same-origin",
                 body: formData
             }).then(response => console.log(response.json()));
     }
