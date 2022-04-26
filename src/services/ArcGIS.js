@@ -46,10 +46,7 @@ const ArcGISHelper = {
             `https://gis.southmetro.org/arcgis/rest/services/Hosted/workforce_9bce7612ad40407881aefb4d6ced6232/FeatureServer/0/${objectId}/addAttachment`,
             {
                 method: "POST",
-                headers: {
-                    'Content-Type': 'multipart/form-data'
-                    // 'Content-Type': 'application/x-www-form-urlencoded',
-                },
+
                 //referrerPolicy: "same-origin",
                 body: formData
             }).then(response => console.log(response.json()));
