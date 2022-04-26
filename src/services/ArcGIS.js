@@ -35,11 +35,12 @@ const ArcGISHelper = {
 
         const arrayBuffer = await instance.exportPDF();
         console.log(arrayBuffer);
-        const blob = new Blob([arrayBuffer]);
+        const blob = new Blob([arrayBuffer], { type: 'application/pdf' });
         console.log(blob);
         const formData = new FormData();
         formData.append("token", await this.getToken());
         formData.append("attachment", blob);
+        formData.append("multipart", true);
         formData.append("f", "json");
         fetch(
             `https://gis.southmetro.org/arcgis/rest/services/Hosted/workforce_9bce7612ad40407881aefb4d6ced6232/FeatureServer/0/${objectId}/addAttachment`,
