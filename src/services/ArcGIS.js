@@ -4,8 +4,8 @@ const ArcGISHelper = {
         var token = "";
 
         const formData = new URLSearchParams();
-        formData.append("username", "GISAdmin");
-        formData.append("password", "GISSmfr9195");
+        formData.append("username", "abner.campuzano@southmetro");
+        formData.append("password", "Campuzano33911933");
         formData.append("client", "referer");
         formData.append("referer", "https://ambitious-sand-0bf74c810.1.azurestaticapps.net");
         formData.append("expiration", "10160")
