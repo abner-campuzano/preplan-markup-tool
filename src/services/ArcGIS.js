@@ -39,7 +39,7 @@ const ArcGISHelper = {
         console.log(blob);
         const formData = new FormData();
         formData.append("token", await this.getToken());
-        formData.append("attachment", blob);
+        formData.append("attachment", blob, "test.pdf");
         formData.append("multipart", true);
         formData.append("f", "json");
         fetch(
