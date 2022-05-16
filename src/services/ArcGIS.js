@@ -42,14 +42,14 @@ const ArcGISHelper = {
         formData.append("attachment", blob, "test.pdf");
         formData.append("multipart", true);
         formData.append("f", "json");
-        fetch(
+        await fetch(
             `https://gis.southmetro.org/arcgis/rest/services/Hosted/workforce_9bce7612ad40407881aefb4d6ced6232/FeatureServer/0/${objectId}/addAttachment`,
             {
                 method: "POST",
 
                 //referrerPolicy: "same-origin",
                 body: formData
-            }).then(response => console.log(response.json()));
+            });
     }
 };
 
