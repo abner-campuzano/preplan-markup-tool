@@ -72,12 +72,9 @@ export function load(defaultConfiguration) {
     onPress: function () {
 
       if(confirm("Are you sure you want to submit changes? The marked up preplan will be attached to your Workforce assignment and this page will close.")){
-
         await ArcGISHelper.attatchPDFtoAssignment(instance, defaultConfiguration.objectId);
-        window.close();
-        
-      }
-
+        window.close();        
+      }    
       
     }
   });
@@ -86,12 +83,9 @@ export function load(defaultConfiguration) {
     id: "my-custom-button2",
     title: "No Changes",
     onPress: function () {
-      alert(
-        "No changes" +
-        PSPDFKit.version +
-        "\nYou are at page " +
-        instance.viewState.currentPageIndex
-      );
+      if(confirm("Are you sure you want to exit with no changes?")){
+        window.close();        
+      }  
     }
   });
 
