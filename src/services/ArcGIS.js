@@ -49,8 +49,6 @@ const ArcGISHelper = {
                 //referrerPolicy: "same-origin",
                 body: formData
             });
-
-        return new Promise < response >;
     }
 };
 
