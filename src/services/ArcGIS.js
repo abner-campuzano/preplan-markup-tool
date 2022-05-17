@@ -21,11 +21,7 @@ const ArcGISHelper = {
             });
 
         var jsonResponse = await response.json();
-
         token = jsonResponse.token;
-
-        console.log("Token: ", token);
-
         return token;
     },
 

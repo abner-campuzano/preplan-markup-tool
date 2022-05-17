@@ -75,7 +75,7 @@ export function load(defaultConfiguration) {
         ArcGISHelper.attatchPDFtoAssignment(instance, defaultConfiguration.objectId).then((response) => {
 
           console.log(response);
-
+          window.alert("This is to troubleshoot.");
           window.open("about:blank", "_self").close();
 
         }
