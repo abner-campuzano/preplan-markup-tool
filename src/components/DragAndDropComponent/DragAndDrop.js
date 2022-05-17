@@ -71,11 +71,14 @@ export function load(defaultConfiguration) {
     title: "Submit Changes",
     onPress: function () {
 
-      if(window.confirm("Are you sure you want to submit changes? The marked up preplan will be attached to your Workforce assignment and this page will close.")){
-        ArcGISHelper.attatchPDFtoAssignment(instance, defaultConfiguration.objectId).then(() => window.close() );
-               
-      }    
-      
+      if (window.confirm("Are you sure you want to submit changes?\r\nThe marked up preplan will be attached to your Workforce assignment and this page will close.")) {
+        ArcGISHelper.attatchPDFtoAssignment(instance, defaultConfiguration.objectId).then(() => {
+          window.open("about:blank", "_self");
+          window.close();
+        });
+
+      }
+
     }
   });
   toolbarItems.push({
@@ -83,9 +86,10 @@ export function load(defaultConfiguration) {
     id: "my-custom-button2",
     title: "No Changes",
     onPress: function () {
-      if(window.confirm("Are you sure you want to exit with no changes?")){
-        window.close();        
-      }  
+      if (window.confirm("Are you sure you want to exit with no changes?")) {
+        window.open("about:blank", "_self");
+        window.close();
+      }
     }
   });
 
