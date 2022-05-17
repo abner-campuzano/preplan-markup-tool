@@ -72,7 +72,10 @@ export function load(defaultConfiguration) {
     onPress: function () {
 
       if (window.confirm("Are you sure you want to submit changes?\r\n\r\nThe marked up preplan will be attached to your Workforce assignment and this page will close.")) {
-        ArcGISHelper.attatchPDFtoAssignment(instance, defaultConfiguration.objectId).then(() => {
+        ArcGISHelper.attatchPDFtoAssignment(instance, defaultConfiguration.objectId).then((response) => {
+
+          console.log(response);
+
           window.open("about:blank", "_self").close();
 
         }
