@@ -73,11 +73,12 @@ export function load(defaultConfiguration) {
 
       if (window.confirm("Are you sure you want to submit changes?\r\n\r\nThe marked up preplan will be attached to your Workforce assignment and this page will close.")) {
         ArcGISHelper.attatchPDFtoAssignment(instance, defaultConfiguration.objectId).then((response) => {
-
-          console.log(response);
-          window.alert("This is to troubleshoot.");
-          window.open("about:blank", "_self").close();
-
+          if (response.ok) {
+            window.open("about:blank", "_self").close();
+          }
+          else {
+            alert("Error. Please try submitting again. If the error persists, contact IT Helpdesk");
+          }
         }
         );
       }
