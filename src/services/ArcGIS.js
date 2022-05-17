@@ -4,8 +4,8 @@ const ArcGISHelper = {
         var token = "";
 
         const formData = new URLSearchParams();
-        formData.append("username", "abner.campuzano@southmetro");
-        formData.append("password", "Campuzano33911933");
+        formData.append("username", "1-GIS-Service@southmetro");
+        formData.append("password", "GIS9195Smfr");
         formData.append("client", "referer");
         formData.append("referer", "https://ambitious-sand-0bf74c810.1.azurestaticapps.net");
         formData.append("expiration", "10160")
@@ -42,14 +42,15 @@ const ArcGISHelper = {
         formData.append("attachment", blob, "test.pdf");
         formData.append("multipart", true);
         formData.append("f", "json");
-        await fetch(
+        var response = await fetch(
             `https://gis.southmetro.org/arcgis/rest/services/Hosted/workforce_9bce7612ad40407881aefb4d6ced6232/FeatureServer/0/${objectId}/addAttachment`,
             {
                 method: "POST",
-
                 //referrerPolicy: "same-origin",
                 body: formData
             });
+
+        return new Promise < response >;
     }
 };
 
