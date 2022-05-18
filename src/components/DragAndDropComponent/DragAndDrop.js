@@ -452,8 +452,6 @@ export const CustomContainer = React.forwardRef((instance, ref) => (
               <img
                 alt="Icon Missing"
                 src={tool.filename}
-                //width="50"
-                //height="50"
                 onDragStart={setDragImageData}
                 onClick={handleImageClick}
                 draggable
@@ -504,13 +502,15 @@ export const CustomContainer = React.forwardRef((instance, ref) => (
       .image-tool {
         display: block;
         cursor: pointer;
-        width: 150px;
-        height: 150px;
+        
       }
 
       .image-tool img {
         outline: 2px solid #eee;
         outline-offset: -2px;
+        width: 90px;
+        height: 90px;
+        object-fit:contain;
       }
 
       .text-tool {
