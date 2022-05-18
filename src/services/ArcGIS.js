@@ -25,7 +25,7 @@ const ArcGISHelper = {
         return token;
     },
 
-    attatchPDFtoAssignment: async function (instance, objectId) {
+    attatchPDFtoAssignment: async function (instance, objectId, preplanId) {
 
         console.log("objectId=" + objectId);
 
@@ -35,7 +35,7 @@ const ArcGISHelper = {
         console.log(blob);
         const formData = new FormData();
         formData.append("token", await this.getToken());
-        formData.append("attachment", blob, "test.pdf");
+        formData.append("attachment", blob, preplanId + "(reviewed).pdf");
         formData.append("multipart", true);
         formData.append("f", "json");
         return await fetch(

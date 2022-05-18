@@ -46,7 +46,7 @@ export function load(defaultConfiguration) {
     onPress: () => {
       instance.exportPDF().then((buffer) => {
         const blob = new Blob([buffer], { type: "application/pdf" });
-        const fileName = "document.pdf";
+        const fileName = defaultConfiguration.preplanId + "(reviewed).pdf";
         if (window.navigator.msSaveOrOpenBlob) {
           window.navigator.msSaveOrOpenBlob(blob, fileName);
         } else {
@@ -72,7 +72,7 @@ export function load(defaultConfiguration) {
     onPress: function () {
 
       if (window.confirm("Are you sure you want to submit changes?\r\n\r\nThe marked up preplan will be attached to your Workforce assignment and this page will close.")) {
-        ArcGISHelper.attatchPDFtoAssignment(instance, defaultConfiguration.objectId).then((response) => {
+        ArcGISHelper.attatchPDFtoAssignment(instance, defaultConfiguration.objectId, defaultConfiguration.preplanId).then((response) => {
           if (response.ok) {
             window.open("about:blank", "_self").close();
             //window.location.replace("Workforce://");
