@@ -399,7 +399,23 @@ const tools = [
   { type: "image", filename: "drag-and-drop/preplan_icons/2.png" },
   { type: "image", filename: "drag-and-drop/preplan_icons/25.png" },
   { type: "image", filename: "drag-and-drop/preplan_icons/30.png" },
-
+  { type: "image", filename: "drag-and-drop/preplan_icons/16.png" },
+  { type: "image", filename: "drag-and-drop/preplan_icons/17.png" },
+  { type: "image", filename: "drag-and-drop/preplan_icons/18.png" },
+  { type: "image", filename: "drag-and-drop/preplan_icons/22.png" },
+  { type: "image", filename: "drag-and-drop/preplan_icons/20.png" },
+  { type: "image", filename: "drag-and-drop/preplan_icons/19.png" },
+  { type: "image", filename: "drag-and-drop/preplan_icons/32.png" },
+  { type: "image", filename: "drag-and-drop/preplan_icons/33.png" },
+  { type: "image", filename: "drag-and-drop/preplan_icons/13.png" },
+  { type: "image", filename: "drag-and-drop/preplan_icons/39.png" },
+  { type: "image", filename: "drag-and-drop/preplan_icons/26.png" },
+  { type: "image", filename: "drag-and-drop/preplan_icons/38.png" },
+  { type: "image", filename: "drag-and-drop/preplan_icons/37.png" },
+  { type: "image", filename: "drag-and-drop/preplan_icons/14.png" },
+  { type: "image", filename: "drag-and-drop/preplan_icons/15.png" },
+  { type: "image", filename: "drag-and-drop/preplan_icons/24.png" },
+  { type: "image", filename: "drag-and-drop/preplan_icons/29.png" },
   { type: "image", filename: "drag-and-drop/preplan_icons/5.jpg" },
   { type: "image", filename: "drag-and-drop/preplan_icons/6.png" },
   { type: "image", filename: "drag-and-drop/preplan_icons/7.jpg" },
@@ -408,34 +424,18 @@ const tools = [
   { type: "image", filename: "drag-and-drop/preplan_icons/10.jpg" },
   { type: "image", filename: "drag-and-drop/preplan_icons/11.jpg" },
   { type: "image", filename: "drag-and-drop/preplan_icons/12.jpg" },
-  { type: "image", filename: "drag-and-drop/preplan_icons/13.png" },
-  { type: "image", filename: "drag-and-drop/preplan_icons/14.png" },
-  { type: "image", filename: "drag-and-drop/preplan_icons/15.png" },
-  { type: "image", filename: "drag-and-drop/preplan_icons/16.png" },
-  { type: "image", filename: "drag-and-drop/preplan_icons/17.png" },
-  { type: "image", filename: "drag-and-drop/preplan_icons/18.png" },
-  { type: "image", filename: "drag-and-drop/preplan_icons/19.png" },
-  { type: "image", filename: "drag-and-drop/preplan_icons/20.png" },
   { type: "image", filename: "drag-and-drop/preplan_icons/21.png" },
-  { type: "image", filename: "drag-and-drop/preplan_icons/22.png" },
   { type: "image", filename: "drag-and-drop/preplan_icons/23.png" },
-  { type: "image", filename: "drag-and-drop/preplan_icons/24.png" },
   { type: "image", filename: "drag-and-drop/preplan_icons/3.png" },
   { type: "image", filename: "drag-and-drop/preplan_icons/4.png" },
-  { type: "image", filename: "drag-and-drop/preplan_icons/26.png" },
   { type: "image", filename: "drag-and-drop/preplan_icons/27.png" },
   { type: "image", filename: "drag-and-drop/preplan_icons/28.png" },
-  { type: "image", filename: "drag-and-drop/preplan_icons/29.png" },
   { type: "image", filename: "drag-and-drop/preplan_icons/30.png" },
   { type: "image", filename: "drag-and-drop/preplan_icons/31.png" },
-  { type: "image", filename: "drag-and-drop/preplan_icons/32.png" },
-  { type: "image", filename: "drag-and-drop/preplan_icons/33.png" },
   { type: "image", filename: "drag-and-drop/preplan_icons/34.png" },
   { type: "image", filename: "drag-and-drop/preplan_icons/35.png" },
-  { type: "image", filename: "drag-and-drop/preplan_icons/36.png" },
-  { type: "image", filename: "drag-and-drop/preplan_icons/37.png" },
-  { type: "image", filename: "drag-and-drop/preplan_icons/38.png" },
-  { type: "image", filename: "drag-and-drop/preplan_icons/39.png" }
+  { type: "image", filename: "drag-and-drop/preplan_icons/36.png" }
+
 ];
 
 // By exporting a CustomContainer, we can customize the HTML structure that is
@@ -508,8 +508,8 @@ export const CustomContainer = React.forwardRef((instance, ref) => (
       .image-tool img {
         outline: 2px solid #eee;
         outline-offset: -2px;
-        width: 90px;
-        height: 90px;
+        width: 75px;
+        height: 75px;
         object-fit:contain;
       }
 
