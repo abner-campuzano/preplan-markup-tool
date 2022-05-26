@@ -394,6 +394,24 @@ function parseImageDimensions(file, onDimensions) {
   image.src = url;
 }
 
+let rotation = 0;
+function rotate() {
+  let newRotation = this.state.rotation + 10;
+  if (newRotation >= 360) {
+    newRotation = - 360;
+  }
+  rotation = newRotation;
+
+}
+
+function rotateleft() {
+  let newRotation = rotation - 90;
+  if (newRotation >= 360) {
+    newRotation = - 360;
+  }
+  rotation = newRotation;
+}
+
 const tools = [
   { type: "image", filename: "drag-and-drop/preplan_icons/1.png" },
   { type: "image", filename: "drag-and-drop/preplan_icons/2.png" },
@@ -449,13 +467,16 @@ export const CustomContainer = React.forwardRef((instance, ref) => (
         if (tool.type === "image") {
           return (
             <div key={tool.filename} className="image-tool tool">
+              <input onClick={rotateleft} type="button" value="left" />
               <img
                 alt="Icon Missing"
                 src={tool.filename}
                 onDragStart={setDragImageData}
                 onClick={handleImageClick}
+                style={{ transform: `rotate(${rotation}deg)` }}
                 draggable
               />
+              <input onClick={rotate} type="button" value="right" />
             </div>
           );
         } else {
