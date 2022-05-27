@@ -266,6 +266,7 @@ function handleImageClick(event) {
           height: target.height,
           left: pageInfo.width / 2 - target.width / 2,
           top: pageInfo.height / 2 - target.height / 2,
+          
         }),
         blob,
         pageIndex
@@ -323,6 +324,7 @@ async function insertImageAnnotation(pageRect, blob, pageIndex) {
       boundingBox: pageRect,
       contentType: "image/jpeg",
       imageAttachmentId: attachmentId,
+      rotation: 90
     });
 
     instance
@@ -394,28 +396,6 @@ function parseImageDimensions(file, onDimensions) {
   image.src = url;
 }
 
-let rotation = 0;
-
-// function getRotation(){
-
-// }
-// function rotate() {
-//   let newRotation = rotation + 5;
-//   if (newRotation >= 360) {
-//     newRotation = - 360;
-//   }
-//   rotation = newRotation;
-
-// }
-
-// function rotateleft() {
-//   let newRotation = rotation - 5;
-//   if (newRotation >= 360) {
-//     newRotation = - 360;
-//   }
-//   rotation = newRotation;
-// }
-
 const tools = [
   { type: "image", filename: "drag-and-drop/preplan_icons/1.png" },
   { type: "image", filename: "drag-and-drop/preplan_icons/2.png" },
@@ -471,16 +451,14 @@ export const CustomContainer = React.forwardRef((instance, ref) => (
         if (tool.type === "image") {
           return (
             <div key={tool.filename} className="image-tool tool">
-              {/* <input onClick={rotateleft} type="button" value="left" /> */}
+             
               <img
                 alt="Icon Missing"
                 src={tool.filename}
                 onDragStart={setDragImageData}
-                onClick={handleImageClick}
-                // style={{ transform: `rotate(${rotation}deg)` }}
+                onClick={handleImageClick}               
                 draggable
               />
-              {/* <input onClick={rotate} type="button" value="right" /> */}
             </div>
           );
         } else {
@@ -499,9 +477,7 @@ export const CustomContainer = React.forwardRef((instance, ref) => (
       })}
     </div>
     <div className="splitPane-right" ref={ref}>
-
     </div>
-
     <style jsx="true">{`
       .splitPane {
         width: 100%;
