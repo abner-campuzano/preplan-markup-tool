@@ -266,7 +266,7 @@ function handleImageClick(event) {
           height: target.height,
           left: pageInfo.width / 2 - target.width / 2,
           top: pageInfo.height / 2 - target.height / 2,
-          
+
         }),
         blob,
         pageIndex
@@ -323,8 +323,7 @@ async function insertImageAnnotation(pageRect, blob, pageIndex) {
       pageIndex,
       boundingBox: pageRect,
       contentType: "image/jpeg",
-      imageAttachmentId: attachmentId,
-      rotation: 90
+      imageAttachmentId: attachmentId
     });
 
     instance
@@ -342,6 +341,24 @@ async function insertImageAnnotation(pageRect, blob, pageIndex) {
 // https://web-examples.pspdfkit.com/tooltips
 function annotationTooltipCallback(annotation) {
   const deleteAnnotation = {
+    type: "custom",
+    title: "Delete",
+    onPress: async () => {
+      if (window.confirm("Do you really want to delete the annotation?")) {
+        await instance.delete(annotation.id);
+      }
+    },
+  };
+  const rotateRight = {
+    type: "custom",
+    title: "Delete",
+    onPress: async () => {
+      if (window.confirm("Do you really want to delete the annotation?")) {
+        await instance.delete(annotation.id);
+      }
+    },
+  };
+  const rotateLeft = {
     type: "custom",
     title: "Delete",
     onPress: async () => {
@@ -378,7 +395,7 @@ function annotationTooltipCallback(annotation) {
 
     return [increaseFontSize, decreaseFontSize, deleteAnnotation];
   } else {
-    return [deleteAnnotation];
+    return [rotateLeft, deleteAnnotation, rotateRight];
   }
 }
 
@@ -451,12 +468,12 @@ export const CustomContainer = React.forwardRef((instance, ref) => (
         if (tool.type === "image") {
           return (
             <div key={tool.filename} className="image-tool tool">
-             
+
               <img
                 alt="Icon Missing"
                 src={tool.filename}
                 onDragStart={setDragImageData}
-                onClick={handleImageClick}               
+                onClick={handleImageClick}
                 draggable
               />
             </div>
