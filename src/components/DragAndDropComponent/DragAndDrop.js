@@ -351,20 +351,20 @@ function annotationTooltipCallback(annotation) {
   };
   const rotateRight = {
     type: "custom",
-    title: "Delete",
+    title: "Rotate Right",
     onPress: async () => {
-      if (window.confirm("Do you really want to delete the annotation?")) {
-        await instance.delete(annotation.id);
-      }
+
+      const updatedAnnotation = annotation.set("rotation", 90);
+
+      await instance.update(updatedAnnotation);
+
     },
   };
   const rotateLeft = {
     type: "custom",
-    title: "Delete",
+    title: "Rotate Left",
     onPress: async () => {
-      if (window.confirm("Do you really want to delete the annotation?")) {
-        await instance.delete(annotation.id);
-      }
+      await instance.update(annotation.id);
     },
   };
 
