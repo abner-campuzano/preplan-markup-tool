@@ -355,8 +355,16 @@ function annotationTooltipCallback(annotation) {
     onPress: async () => {
 
 
-      console.log(annotation);
-      const updatedAnnotation = annotation.set("rotation", 45);
+      let currentRotationVal = annotation.rotation;
+      console.log(currentRotationVal);
+
+      if (currentRotationVal == 270) {
+        const updatedAnnotation = annotation.set("rotation", 90);
+      }
+      else {
+
+        const updatedAnnotation = annotation.set("rotation", currentRotationVal + 90);
+      }
 
       await instance.update(updatedAnnotation);
 
