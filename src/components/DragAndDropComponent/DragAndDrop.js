@@ -354,7 +354,9 @@ function annotationTooltipCallback(annotation) {
     title: "Rotate Right",
     onPress: async () => {
 
-      const updatedAnnotation = annotation.set("rotation", 90);
+
+      console.log(annotation);
+      const updatedAnnotation = annotation.set("rotation", 45);
 
       await instance.update(updatedAnnotation);
 
