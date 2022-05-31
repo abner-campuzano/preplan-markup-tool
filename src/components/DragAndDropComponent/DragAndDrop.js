@@ -360,13 +360,15 @@ function annotationTooltipCallback(annotation) {
 
       if (currentRotationVal == 270) {
         const updatedAnnotation = annotation.set("rotation", 90);
+        await instance.update(updatedAnnotation);
       }
       else {
 
         const updatedAnnotation = annotation.set("rotation", currentRotationVal + 90);
+        await instance.update(updatedAnnotation);
       }
 
-      await instance.update(updatedAnnotation);
+
 
     },
   };
