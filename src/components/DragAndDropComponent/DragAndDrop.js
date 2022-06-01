@@ -349,31 +349,28 @@ function annotationTooltipCallback(annotation) {
       }
     },
   };
+
   const rotateRight = {
     type: "custom",
     title: "Rotate Right",
     onPress: async () => {
 
-
-      annotation.get("rotation");
-
+      console.log(annotation.get("rotation"));
       let currentRotationVal = annotation.rotation;
+      console.log("currentRotationVal");
       console.log(currentRotationVal);
 
-      if (currentRotationVal == 270) {
+      if (currentRotationVal === 270) {
         const updatedAnnotation = annotation.set("rotation", 90);
         await instance.update(updatedAnnotation);
       }
       else {
-
         const updatedAnnotation = annotation.set("rotation", currentRotationVal + 90);
         await instance.update(updatedAnnotation);
       }
-
-
-
     },
   };
+
   const rotateLeft = {
     type: "custom",
     title: "Rotate Left",
