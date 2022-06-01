@@ -355,6 +355,8 @@ function annotationTooltipCallback(annotation) {
     onPress: async () => {
 
 
+      annotation.get("rotation");
+
       let currentRotationVal = annotation.rotation;
       console.log(currentRotationVal);
 
