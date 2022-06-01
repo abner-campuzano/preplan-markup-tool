@@ -354,14 +354,11 @@ function annotationTooltipCallback(annotation) {
     type: "custom",
     title: "Rotate Right",
     onPress: async () => {
-
-      console.log(annotation.get("rotation"));
-      let currentRotationVal = annotation.rotation;
-      console.log("currentRotationVal");
-      console.log(currentRotationVal);
+      
+      let currentRotationVal = annotation.rotation;      
 
       if (currentRotationVal === 270) {
-        const updatedAnnotation = annotation.set("rotation", 90);
+        const updatedAnnotation = annotation.set("rotation", 0);
         await instance.update(updatedAnnotation);
       }
       else {
@@ -375,7 +372,16 @@ function annotationTooltipCallback(annotation) {
     type: "custom",
     title: "Rotate Left",
     onPress: async () => {
-      await instance.update(annotation.id);
+      let currentRotationVal = annotation.rotation; 
+
+      if (currentRotationVal === 0) {
+        const updatedAnnotation = annotation.set("rotation", 270);
+        await instance.update(updatedAnnotation);
+      }
+      else {
+        const updatedAnnotation = annotation.set("rotation", currentRotationVal - 90);
+        await instance.update(updatedAnnotation);
+      }
     },
   };
 
@@ -406,7 +412,7 @@ function annotationTooltipCallback(annotation) {
 
     return [increaseFontSize, decreaseFontSize, deleteAnnotation];
   } else {
-    return [rotateLeft, deleteAnnotation, rotateRight];
+    return [rotateLeft, rotateRight];
   }
 }
 
