@@ -350,9 +350,9 @@ function annotationTooltipCallback(annotation) {
     },
   };
 
-  const rotateRight = {
+  const rotateLeft = {
     type: "custom",
-    title: "Rotate Right",
+    title: "Rotate Left",
     onPress: async () => {
       
       let currentRotationVal = annotation.rotation;      
@@ -368,9 +368,9 @@ function annotationTooltipCallback(annotation) {
     },
   };
 
-  const rotateLeft = {
+  const rotateRight = {
     type: "custom",
-    title: "Rotate Left",
+    title: "Rotate Right",
     onPress: async () => {
       let currentRotationVal = annotation.rotation; 
 
