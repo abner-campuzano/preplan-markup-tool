@@ -1,27 +1,12 @@
 const ArcGISHelper = {
 
     getToken: async function () {
-        var token = "";
 
-        const formData = new URLSearchParams();
-        formData.append("username", "1-GIS-Service@southmetro");
-        formData.append("password", "GIS9195Smfr");
-        formData.append("client", "referer");
-        formData.append("referer", "https://ambitious-sand-0bf74c810.1.azurestaticapps.net");
-        formData.append("expiration", "10160")
-        formData.append("f", "json");
-        var response = await fetch(
-            `https://gis.southmetro.org/portal/sharing/rest/generateToken`,
-            {
-                method: "POST",
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded'
-                },
-                body: formData
-            });
+        const { token } = await (await fetch(`/api/ESRIAuth`)).json();
 
-        var jsonResponse = await response.json();
-        token = jsonResponse.token;
+        console.log("token");
+        console.log(token);
+
         return token;
     },
 
