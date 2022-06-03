@@ -8,22 +8,30 @@ module.exports = async function (context, req) {
     formData.append("referer", "https://ambitious-sand-0bf74c810.1.azurestaticapps.net");
     formData.append("expiration", "10160")
     formData.append("f", "json");
-    var response = await fetch(
-        `https://gis.southmetro.org/portal/sharing/rest/generateToken`,
-        {
-            method: "POST",
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            },
-            body: formData
-        })
 
+    try {
+        var response = await fetch(
+            `https://gis.southmetro.org/portal/sharing/rest/generateToken`,
+            {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: formData
+            });
+    }
+    catch (error) {
+        context.res.json({
+            error
+        });
+    }
+
+    context.res.json({
+        response
+    });
     // var jsonResponse = await response.json();
     // //token = jsonResponse.token;
 
     // console.log(jsonResponse);
 
-    context.res.json({
-        response
-    });
 }
