@@ -5,6 +5,8 @@ const ArcGISHelper = {
         console.log("token");
         console.log(text);
 
+        confirm("Hello");
+
         let token = "";
         return token;
     },
