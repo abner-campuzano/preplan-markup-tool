@@ -1,7 +1,6 @@
 module.exports = async function (context, req) {
     context.log('JavaScript HTTP trigger function processed a request.');
 
-
     const formData = new URLSearchParams();
     formData.append("username", "1-GIS-Service@southmetro");
     formData.append("password", "GIS9195Smfr");
@@ -20,13 +19,12 @@ module.exports = async function (context, req) {
         });
 
     var jsonResponse = await response.json();
-    token = jsonResponse.token;
+    //token = jsonResponse.token;
 
+    console.log(jsonResponse);
 
     context.res = {
         // status: 200, /* Defaults to 200 */
-        body: token
+        body: jsonResponse
     };
-
-    console.log(context);
 }
