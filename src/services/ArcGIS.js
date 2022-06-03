@@ -1,9 +1,9 @@
 const ArcGISHelper = {
 
     getToken: async function () {
-        const { text } = await (await fetch(`/api/ESRIAuth`)).json();
+        const { response } = await (await fetch(`/api/ESRIAuth`)).json();
         console.log("token");
-        console.log(text);
+        console.log(response);
 
         window.confirm("Hello");
 

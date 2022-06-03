@@ -16,7 +16,7 @@ module.exports = async function (context, req) {
                 'Content-Type': 'application/x-www-form-urlencoded'
             },
             body: formData
-        });
+        })
 
     // var jsonResponse = await response.json();
     // //token = jsonResponse.token;
@@ -24,6 +24,6 @@ module.exports = async function (context, req) {
     // console.log(jsonResponse);
 
     context.res.json({
-        text: response
+        response
     });
 }
