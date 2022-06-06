@@ -25,9 +25,11 @@ module.exports = async function (context, req) {
     context.res = {
         body: response
     };
-    var jsonResponse = await response.json();
-    //token = jsonResponse.token;
 
-    console.log(jsonResponse);
+    context.done();
+    // var jsonResponse = await response.json();
+    // //token = jsonResponse.token;
+
+    // console.log(jsonResponse);
 
 }
