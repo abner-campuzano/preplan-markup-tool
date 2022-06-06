@@ -30,6 +30,8 @@ module.exports = async function (context, req) {
     }
     catch(error)
     {
+        context.log(error);
+
         context.res = {
             body: error
         };
