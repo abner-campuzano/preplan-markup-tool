@@ -1,5 +1,6 @@
-import axios from 'axios';
-export default async function (context, req) {
+const https = require('https');
+
+module.exports = async function (context, req) {
     context.log('JavaScript HTTP trigger function processed a request.');
 
     const formData = new URLSearchParams();
@@ -10,9 +11,15 @@ export default async function (context, req) {
     formData.append("expiration", "10160")
     formData.append("f", "json");
     try {
-        
 
-        var response = axios.post("https://gis.southmetro.org/portal/sharing/rest/generateToken",formData);
+        var response = https.request("https://gis.southmetro.org/portal/sharing/rest/generateToken",
+            {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: formData
+            });
 
         // await fetch(
         //     "https://gis.southmetro.org/portal/sharing/rest/generateToken",
@@ -23,14 +30,15 @@ export default async function (context, req) {
         //         },
         //         body: formData
         //     });
-            context.log('Response');
-            context.log(response);
+        
+        context.log('Response');
+        context.log(response);
 
-            context.res = {
-                body: response
-            };
+        context.res = {
+            body: response
+        };
 
-            context.done();
+        context.done();
     }
     catch (error) {
         context.log(error);
