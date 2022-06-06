@@ -1,4 +1,4 @@
-const fetch = require('node-fetch');
+import fetch from 'node-fetch';
 module.exports = async function (context, req) {
     context.log('JavaScript HTTP trigger function processed a request.');
 
