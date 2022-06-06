@@ -12,7 +12,7 @@ module.exports = async function (context, req) {
     formData.append("f", "json");
     try {
 
-        var response =  axios.post("https://gis.southmetro.org/portal/sharing/rest/generateToken",formData);
+        var response =  await axios.post("https://gis.southmetro.org/portal/sharing/rest/generateToken",formData);
 
         // await fetch(
         //     "https://gis.southmetro.org/portal/sharing/rest/generateToken",
