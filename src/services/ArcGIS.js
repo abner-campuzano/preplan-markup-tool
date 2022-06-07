@@ -2,8 +2,8 @@ const ArcGISHelper = {
 
     getToken: async function () {
         const data = await fetch("/api/ESRIAuth");         
-        
-        let token = data.token;
+        const dataJson = await data.json();
+        let token = dataJson.token;
         return token;
     },
 
