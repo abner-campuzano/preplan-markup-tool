@@ -24,22 +24,18 @@ module.exports = async function (context, req) {
         //         body: formData
         //     });
         
-        context.log('Response');
-        context.log(response);
-        
+        context.log(' No done Response');
+        context.log(response);        
         context.res = {
             body: response
         };
-
-        context.done();
+        
     }
     catch (error) {
         context.log(error);
-
         context.res = {
             body: error
         };
-        context.done();
     }
 
 
