@@ -28,7 +28,7 @@ export function load(defaultConfiguration) {
 
   //Customize Toolbar
   const toolbarItems = PSPDFKit.defaultToolbarItems.filter((item) => {
-    return /\b(sidebar-thumbnails|zoom-in|zoom-out|note|text|)\b/.test(
+    return /\b(sidebar-thumbnails|zoom-in|zoom-out|text|note)\b/.test(
       item.type
     );
   });
