@@ -384,6 +384,7 @@ function annotationTooltipCallback(annotation) {
       }
     },
   };
+  return [rotateLeft, rotateRight];
 }
 
   if (annotation instanceof PSPDFKit.Annotations.TextAnnotation) {
@@ -412,9 +413,7 @@ function annotationTooltipCallback(annotation) {
     };
 
     return [increaseFontSize, decreaseFontSize, deleteAnnotation];
-  } else {
-    return [rotateLeft, rotateRight];
-  }
+  } 
 }
 
 // Given a File object, we can create an <image/> tag to parse the image and
