@@ -349,7 +349,7 @@ function annotationTooltipCallback(annotation) {
       }
     },
   };
-
+  if (annotation instanceof PSPDFKit.Annotations.ImageAnnotation) {
   const rotateLeft = {
     type: "custom",
     title: "Rotate Left",
@@ -384,6 +384,7 @@ function annotationTooltipCallback(annotation) {
       }
     },
   };
+}
 
   if (annotation instanceof PSPDFKit.Annotations.TextAnnotation) {
     const increaseFontSize = {
