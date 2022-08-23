@@ -74,9 +74,8 @@ export function load(defaultConfiguration) {
       if (window.confirm("Are you sure you want to submit changes?\r\n\r\nThe marked up preplan will be attached to your Workforce assignment and this page will close.")) {
         ArcGISHelper.attatchPDFtoAssignment(instance, defaultConfiguration.objectId, defaultConfiguration.preplanId).then((response) => {
           if (response.ok) {
-            window.location.assign("arcgis-workforce://");
-            //window.open("about:blank", "_self").close();
-            //window.location.replace("Workforce://");
+            window.open("arcgis-workforce://");
+            window.close();          
           }
           else {
             alert("Error. Please try submitting again. If the error persists, contact IT Helpdesk");
@@ -96,7 +95,7 @@ export function load(defaultConfiguration) {
        // window.location.assign("arcgis-workforce://");
         window.open("arcgis-workforce://");
         window.close();
-        //window.location.replace("Workforce://");
+      
       }
     }
   });
