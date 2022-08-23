@@ -75,7 +75,7 @@ export function load(defaultConfiguration) {
         ArcGISHelper.attatchPDFtoAssignment(instance, defaultConfiguration.objectId, defaultConfiguration.preplanId).then((response) => {
           if (response.ok) {
             window.location.assign("arcgis-workforce://");
-            window.open("about:blank", "_self").close();
+            //window.open("about:blank", "_self").close();
             //window.location.replace("Workforce://");
           }
           else {
@@ -93,8 +93,8 @@ export function load(defaultConfiguration) {
     title: "No Changes",
     onPress: function () {
       if (window.confirm("Are you sure you want to exit with no changes?")) {
-        window.location.assign("arcgis-workforce://");
-        window.open("about:blank", "_self");
+       // window.location.assign("arcgis-workforce://");
+        window.open("arcgis-workforce://");
         window.close();
         //window.location.replace("Workforce://");
       }
