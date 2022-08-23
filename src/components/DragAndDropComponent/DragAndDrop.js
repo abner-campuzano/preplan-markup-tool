@@ -74,7 +74,7 @@ export function load(defaultConfiguration) {
       if (window.confirm("Are you sure you want to submit changes?\r\n\r\nThe marked up preplan will be attached to your Workforce assignment and this page will close.")) {
         ArcGISHelper.attatchPDFtoAssignment(instance, defaultConfiguration.objectId, defaultConfiguration.preplanId).then((response) => {
           if (response.ok) {
-            window.location.replace("arcgis-workforce://");
+            window.location.assign("arcgis-workforce://");
             window.open("about:blank", "_self").close();
             //window.location.replace("Workforce://");
           }
@@ -93,7 +93,7 @@ export function load(defaultConfiguration) {
     title: "No Changes",
     onPress: function () {
       if (window.confirm("Are you sure you want to exit with no changes?")) {
-        window.location.replace("arcgis-workforce://");
+        window.location.assign("arcgis-workforce://");
         window.open("about:blank", "_self");
         window.close();
         //window.location.replace("Workforce://");
