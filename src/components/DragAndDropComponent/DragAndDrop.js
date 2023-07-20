@@ -36,9 +36,6 @@ export function load(defaultConfiguration) {
   toolbarItems.push({
     type: "spacer",
   });
-
-
-
   toolbarItems.push({
     type: "custom",
     id: "download-pdf",
