@@ -1,6 +1,6 @@
-const axios = require('axios').default;
+import axios from 'axios';
 
-module.exports = async function (context, req) {
+export default async function (context, req) {
     context.log('JavaScript HTTP trigger function processed a request.');
 
     const formData = new URLSearchParams();
@@ -37,8 +37,6 @@ module.exports = async function (context, req) {
             body: error
         };
     }
-
-
     // var jsonResponse = await response.json();
     // //token = jsonResponse.token;
 

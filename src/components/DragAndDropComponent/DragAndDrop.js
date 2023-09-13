@@ -1,6 +1,7 @@
 import PSPDFKit from "pspdfkit";
 import * as React from "react";
 import ArcGISHelper from "../../services/ArcGIS";
+import { BlockBlobClient } from '@azure/storage-blob';
 
 // Assign the PSPDFKit instance to a module variable so we can access it
 // everywhere.
@@ -26,6 +27,23 @@ export function load(defaultConfiguration) {
     sidebarPlacement: PSPDFKit.SidebarPlacement.END,
   });
 
+ //AUTO SAVE  
+   setInterval(async () => {
+    const arrayBuffer = await instance.exportPDF();
+    const preplanId = defaultConfiguration.preplanId;    
+
+    //get SAS URL with w permissions
+    const data = await fetch(`/api/GenerateSAS?fileName=${preplanId}.pdf&permissions=w`);    
+    const dataJson = await data.json(); 
+    const sasTokenUrl = dataJson.url
+
+    //Upload blob  
+    const blockBlobClient = new BlockBlobClient(sasTokenUrl);
+    console.log(blockBlobClient);
+    await blockBlobClient.uploadData(arrayBuffer);  
+
+   }, 60 * 200); // runs in miliseconds
+
   //Customize Toolbar
   const toolbarItems = PSPDFKit.defaultToolbarItems.filter((item) => {
     return /\b(sidebar-thumbnails|zoom-in|zoom-out|text|note)\b/.test(
@@ -36,7 +54,16 @@ export function load(defaultConfiguration) {
   toolbarItems.push({
     type: "spacer",
   });
-  toolbarItems.push({
+
+ //NEEDS CLEANUP
+ 
+  const regex = /Mobi|Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i;
+  const isMobile = regex.test(navigator.userAgent);
+
+
+if (!isMobile) {
+   //DOWNLOAD LOCAL
+   toolbarItems.push({
     type: "custom",
     id: "download-pdf",
     title: "Download",
@@ -60,6 +87,9 @@ export function load(defaultConfiguration) {
       });
     }
   });
+} 
+
+ 
 
   // A custom item. Inside the onPress callback we can call into PSPDFKit APIs.
   toolbarItems.push({
@@ -72,7 +102,8 @@ export function load(defaultConfiguration) {
         ArcGISHelper.attatchPDFtoAssignment(instance, defaultConfiguration.objectId, defaultConfiguration.preplanId).then((response) => {
           if (response.ok) {
             window.open("arcgis-workforce://");
-            window.close();          
+            window.close();
+            //TODO Delete copy in azure           
           }
           else {
             alert("Error. Please try submitting again. If the error persists, contact IT Helpdesk");
@@ -80,9 +111,9 @@ export function load(defaultConfiguration) {
         }
         );
       }
-
     }
   });
+  
   toolbarItems.push({
     type: "custom",
     id: "my-custom-button2",
@@ -464,7 +495,6 @@ const tools = [
   { type: "image", filename: "drag-and-drop/preplan_icons/4.png" },
   { type: "image", filename: "drag-and-drop/preplan_icons/27.png" },
   { type: "image", filename: "drag-and-drop/preplan_icons/28.png" },
-  { type: "image", filename: "drag-and-drop/preplan_icons/30.png" },
   { type: "image", filename: "drag-and-drop/preplan_icons/31.png" },
   { type: "image", filename: "drag-and-drop/preplan_icons/34.png" },
   { type: "image", filename: "drag-and-drop/preplan_icons/35.png" },
