@@ -45,7 +45,7 @@ export default async function (context, req) {
                 );
                 context.res = {
                     // status: 200, /* Defaults to 200 */
-                    body: { url }
+                    body: { url, preplanInprogressExists }
                 };
             }
             else {
@@ -60,7 +60,7 @@ export default async function (context, req) {
                 );
                 context.res = {
                     // status: 200, /* Defaults to 200 */
-                    body: { url }
+                    body: { url,preplanInprogressExists }
                 };
             }
         }

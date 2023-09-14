@@ -1,4 +1,4 @@
-import PSPDFKit from "pspdfkit";
+import PSPDFKit, { Color } from "pspdfkit";
 import * as React from "react";
 import ArcGISHelper from "../../services/ArcGIS";
 import { BlockBlobClient } from '@azure/storage-blob';
@@ -39,7 +39,7 @@ export function load(defaultConfiguration) {
 
     //Upload blob  
     const blockBlobClient = new BlockBlobClient(sasTokenUrl);
-    console.log(blockBlobClient);
+    //console.log(blockBlobClient);
     await blockBlobClient.uploadData(arrayBuffer);  
 
    }, 60 * 200); // runs in miliseconds
@@ -49,7 +49,7 @@ export function load(defaultConfiguration) {
     return /\b(sidebar-thumbnails|zoom-in|zoom-out|text|note)\b/.test(
       item.type
     );
-  });
+  }); 
 
   toolbarItems.push({
     type: "spacer",
@@ -88,7 +88,6 @@ if (!isMobile) {
     }
   });
 } 
-
  
 
   // A custom item. Inside the onPress callback we can call into PSPDFKit APIs.
@@ -139,6 +138,8 @@ if (!isMobile) {
   }).then((_instance) => {
     instance = _instance;
 
+    
+
     // We only allow dropping elements onto a PDF page.
     instance.contentDocument.ondragover = function (event) {
       isDragAndDropSupported = true;
@@ -178,6 +179,7 @@ if (!isMobile) {
 function handleExternalDrop(event, pageIndex) {
   const file = event.dataTransfer.files[0];
   const allowedExternalMimeTypes = ["image/jpeg", "image/png"];
+  
 
   if (!allowedExternalMimeTypes.includes(file.type)) {
     return;
@@ -222,6 +224,7 @@ function handleInternalDrop(event, pageIndex) {
   // We know that internal drag and drop objects will have the cursor on the
   // top left left side of the box. We also know the dimensions of the
   // rectangles.
+ 
   const clientRect = new PSPDFKit.Geometry.Rect({
     left: event.clientX,
     top: event.clientY,
@@ -334,6 +337,7 @@ async function insertTextAnnotation(pageRect, text, pageIndex, fontSize) {
     text,
     pageIndex,
     fontSize,
+    fontColor:PSPDFKit.Color.PURPLE,
     horizontalAlign: "center",
     verticalAlign: "center",
     backgroundColor: PSPDFKit.Color.WHITE,
@@ -635,6 +639,7 @@ export const CustomContainer = React.forwardRef((instance, ref) => (
         .text-tool {
           font-size: 13px;
           line-height: 108px;
+          font-color: purple;
         }
 
         .tool {
