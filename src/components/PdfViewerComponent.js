@@ -61,10 +61,11 @@ const getDocumentURL = async function (preplanId) {
         if (window.confirm("Preplan is being edited by someone else. D you want to take over?")) {
             return dataJson.url;
         }
-        else {
-            return "";
-        }
+        
 
+    }
+    else {
+        return dataJson.url;
     }
 
 
