@@ -1,4 +1,4 @@
-import PSPDFKit, { Color } from "pspdfkit";
+import PSPDFKit from "pspdfkit";
 import * as React from "react";
 import ArcGISHelper from "../../services/ArcGIS";
 import { BlockBlobClient } from '@azure/storage-blob';
