@@ -1,5 +1,5 @@
 import { error } from 'console';
-import { blobExists, generateSASUrl, listFilesInContainer } from '../lib/azure-storage.js';
+import { blobExists, generateSASUrl } from '../lib/azure-storage.js';
 
 export default async function (context, req) {
 
@@ -32,10 +32,10 @@ export default async function (context, req) {
                 process.env?.Azure_Storage_In_Progress_Container,
                 fileName
             );
-
-            if (preplanInprogressExists) {
-                //Generate SAS URL with In progress Container
-                const url = await generateSASUrl(
+            
+            var url = "";
+            if (permissions === 'w') {
+                    url = await generateSASUrl(
                     process.env?.Azure_Storage_AccountName,
                     process.env?.Azure_Storage_AccountKey,
                     process.env?.Azure_Storage_In_Progress_Container,
@@ -43,14 +43,9 @@ export default async function (context, req) {
                     permissions,
                     timerange
                 );
-                context.res = {
-                    // status: 200, /* Defaults to 200 */
-                    body: { url, preplanInprogressExists }
-                };
             }
-            else {
-                //Generate SAS URL with original Container
-                const url = await generateSASUrl(
+            if (permissions === 'r') {
+                    url = await generateSASUrl(
                     process.env?.Azure_Storage_AccountName,
                     process.env?.Azure_Storage_AccountKey,
                     process.env?.Azure_Storage_Container,
@@ -58,11 +53,12 @@ export default async function (context, req) {
                     permissions,
                     timerange
                 );
-                context.res = {
-                    // status: 200, /* Defaults to 200 */
-                    body: { url,preplanInprogressExists }
-                };
             }
+            context.res = {
+                // status: 200, /* Defaults to 200 */
+                body: { url, preplanInprogressExists }
+            };
+          
         }
     } catch (error) {
         console.log("ERROR Generating SAS");

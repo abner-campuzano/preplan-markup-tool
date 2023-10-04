@@ -29,18 +29,20 @@ export function load(defaultConfiguration) {
 
  //AUTO SAVE  
    setInterval(async () => {
-    const arrayBuffer = await instance.exportPDF();
-    const preplanId = defaultConfiguration.preplanId;    
-
-    //get SAS URL with w permissions
-    const data = await fetch(`/api/GenerateSAS?fileName=${preplanId}.pdf&permissions=w`);    
-    const dataJson = await data.json(); 
-    const sasTokenUrl = dataJson.url
-
-    //Upload blob  
-    const blockBlobClient = new BlockBlobClient(sasTokenUrl);
-    //console.log(blockBlobClient);
-    await blockBlobClient.uploadData(arrayBuffer);  
+    if(instance){
+      const arrayBuffer = await instance.exportPDF();
+      const preplanId = defaultConfiguration.preplanId;    
+  
+      //get SAS URL with w permissions
+      const data = await fetch(`/api/GenerateSAS?fileName=${preplanId}.pdf&permissions=w`);    
+      const dataJson = await data.json(); 
+      const sasTokenUrl = dataJson.url
+  
+      //Upload blob  
+      const blockBlobClient = new BlockBlobClient(sasTokenUrl);
+      //console.log(blockBlobClient);
+      await blockBlobClient.uploadData(arrayBuffer);
+    }     
 
    }, 60 * 200); // runs in miliseconds
 
@@ -510,7 +512,8 @@ const tools = [
 // used by the catalog app.
 // We do this so that we can show the sidebar and fill it with some example
 // tools.
-export const CustomContainer = React.forwardRef((instance, ref) => (
+
+export const CustomContainer = React.forwardRef((instance, ref) => ( 
   <div className="splitPane">
     <div className="splitPane-left">
       {tools.map((tool) => {

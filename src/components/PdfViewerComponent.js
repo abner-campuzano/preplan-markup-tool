@@ -1,22 +1,42 @@
-import { useEffect, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { CustomContainer, load } from "./DragAndDropComponent/DragAndDrop";
+//import { useState } from "react";
+import { useIdleTimer } from 'react-idle-timer'
 
 
-export default function PdfViewerComponent(props) {
+export default function PdfViewerComponent(props) {    
     const containerRef = useRef();
 
+    const onIdle = () => {
+        props.signalTimeout(true);        
+    }
+    
+    const onActive = () => {
+        //setState('Active');
+    }
+
+    const onAction = () => {
+        //setCount(count + 1);
+        //console.log("Action");
+    }
+    const timer = useIdleTimer({
+        onIdle,
+        onActive,
+        onAction,
+        timeout: 30_000,// 30seconds
+        throttle: 500
+    });
 
     useEffect(() => {
         const container = containerRef.current;
         let PSPDFKit;
-
         (async function () {
             PSPDFKit = await import("pspdfkit");
             const docURL = await getDocumentURL(props.preplanId);
-            console.log("USE EFFECT");
+            // console.log("UE PdfViewerComponent");
 
             if (docURL === "") {
-                window.close();
+                onIdle();
             } else {
                 await load({
                     // Container where PSPDFKit should be mounted.
@@ -26,47 +46,44 @@ export default function PdfViewerComponent(props) {
                     // Use the public directory URL as a base URL. PSPDFKit will download its library assets from here.
                     baseUrl: `${window.location.protocol}//${window.location.host}/${process.env.PUBLIC_URL}`,
                     // Abner Add:
+                    customRenderers: {
+                        Annotation: ({ annotation }) => {
+                            //console.log("CUSTOM RENDERER")
+                            //reset idle timer when an annotation is rendered
+                            timer.reset();
+                            return null;
+                        }
+                    },
                     objectId: props.objectId,
                     preplanId: props.preplanId
                 });
             }
+
+
         })();
 
         return () => PSPDFKit && PSPDFKit.unload(container);
-    });
+    },);
+
 
     return (
         <CustomContainer ref={containerRef} />
     );
+
 }
-
-// const handleAutoSave = async function(instance, preplanId){
-//     const arrayBuffer = await instance.exportPDF(); 
-
-//     //get SAS URL with w permissions
-//     const data = await fetch(`/api/GenerateSAS?fileName=${preplanId}.pdf&permissions=w`);    
-//     const dataJson = await data.json(); 
-//     const sasTokenUrl = dataJson.url
-
-//     //Upload blob
-//     const blockBlobClient = new BlockBlobClient(sasTokenUrl);
-//     console.log(blockBlobClient);
-//     await blockBlobClient.uploadData(arrayBuffer);  
-// }
 
 const getDocumentURL = async function (preplanId) {
     const data = await fetch(`/api/GenerateSAS?fileName=${preplanId}.pdf&permissions=r`);
     const dataJson = await data.json();
     if (dataJson.preplanInprogressExists) {
-        if (window.confirm("Preplan is being edited by someone else. D you want to take over?")) {
+        if (window.confirm("Preplan is being edited by someone else. Do you want to take over? Editing on multiple devices at the same time will sync issues.")) {
             return dataJson.url;
         }
-        
-
+        else{
+            window.location.replace("")
+        }
     }
     else {
         return dataJson.url;
     }
-
-
 }

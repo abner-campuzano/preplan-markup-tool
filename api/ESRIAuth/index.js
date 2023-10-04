@@ -13,17 +13,6 @@ export default async function (context, req) {
     try {
 
        const {data} =  await axios.post("https://gis.southmetro.org/portal/sharing/rest/generateToken",formData);
-
-        // await fetch(
-        //     "https://gis.southmetro.org/portal/sharing/rest/generateToken",
-        //     {
-        //         method: "POST",
-        //         headers: {
-        //             'Content-Type': 'application/x-www-form-urlencoded'
-        //         },
-        //         body: formData
-        //     });
-        
         context.log(' No done Response');
         context.log(data);        
         context.res = {
