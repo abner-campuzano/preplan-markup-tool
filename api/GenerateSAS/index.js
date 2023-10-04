@@ -1,4 +1,3 @@
-import { error } from 'console';
 import { blobExists, generateSASUrl } from '../lib/azure-storage.js';
 
 export default async function (context, req) {
@@ -44,11 +43,21 @@ export default async function (context, req) {
                     timerange
                 );
             }
-            if (permissions === 'r') {
+            if (permissions === 'r' && !preplanInprogressExists) {
                     url = await generateSASUrl(
                     process.env?.Azure_Storage_AccountName,
                     process.env?.Azure_Storage_AccountKey,
                     process.env?.Azure_Storage_Container,
+                    fileName,
+                    permissions,
+                    timerange
+                );
+            }
+            if(permissions === 'r' && preplanInprogressExists) {
+                url = await generateSASUrl(
+                    process.env?.Azure_Storage_AccountName,
+                    process.env?.Azure_Storage_AccountKey,
+                    process.env?.Azure_Storage_In_Progress_Container,
                     fileName,
                     permissions,
                     timerange
