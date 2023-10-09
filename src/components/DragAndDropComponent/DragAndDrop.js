@@ -71,7 +71,7 @@ if (!isMobile) {
       instance.exportPDF().then((buffer) => {
         const blob = new Blob([buffer], { type: "application/pdf" });
         const date = new Date();
-        const fileName = `${defaultConfiguration.preplanId}_${date.getDate()}_${date.getDay()}_${date.getHours()}:${date.getMinutes}:${date.getSeconds}().pdf`;
+        const fileName = `${defaultConfiguration.preplanId}_${date.getDate()}_${date.getDay()}_${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}.pdf`;
         if (window.navigator.msSaveOrOpenBlob) {
           window.navigator.msSaveOrOpenBlob(blob, fileName);
         } else {
@@ -100,7 +100,10 @@ if (!isMobile) {
         ).then(()=>{
           if(isMobile){
             window.open("arcgis-workforce://");
-          }          
+            window.close();
+
+          }
+          window.open("about:blank", "_self");          
           window.close();
         });       
       });
@@ -133,7 +136,9 @@ if (!isMobile) {
             ).then(()=>{
               if(isMobile){
                 window.open("arcgis-workforce://");
-              }          
+                window.close();
+              }                       
+              window.open("about:blank", "_self");          
               window.close();
             });       
           }
@@ -168,7 +173,10 @@ if (!isMobile) {
       ).then(()=>{
         if(isMobile){
           window.open("arcgis-workforce://");
-        }          
+          window.close();
+
+        }
+        window.open("about:blank", "_self");          
         window.close();
       }); 
       }
