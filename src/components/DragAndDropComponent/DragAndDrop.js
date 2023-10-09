@@ -57,11 +57,9 @@ export function load(defaultConfiguration) {
     type: "spacer",
   });
 
- //NEEDS CLEANUP
- 
+ //NEEDS CLEANUP 
   const regex = /Mobi|Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i;
   const isMobile = regex.test(navigator.userAgent);
-
 
 if (!isMobile) {
    //DOWNLOAD LOCAL
@@ -72,7 +70,8 @@ if (!isMobile) {
     onPress: () => {
       instance.exportPDF().then((buffer) => {
         const blob = new Blob([buffer], { type: "application/pdf" });
-        const fileName = defaultConfiguration.preplanId + "(reviewed).pdf";
+        const date = new Date();
+        const fileName = `${defaultConfiguration.preplanId}_${date.getDate()}_${date.getDay()}_${date.getHours()}:${date.getMinutes}:${date.getSeconds}().pdf`;
         if (window.navigator.msSaveOrOpenBlob) {
           window.navigator.msSaveOrOpenBlob(blob, fileName);
         } else {
@@ -86,11 +85,28 @@ if (!isMobile) {
           URL.revokeObjectURL(objectUrl);
           document.body.removeChild(a);
         }
+
+        fetch(
+          `/api/Preplan`,
+          { 
+            method: 'DELETE', 
+            headers: { 
+                'Content-type': 'application/json'              
+              },
+            body: {
+              fileName : defaultConfiguration.preplanId + '.pdf'
+            }
+          }  
+        ).then(()=>{
+          if(isMobile){
+            window.open("arcgis-workforce://");
+          }          
+          window.close();
+        });       
       });
     }
   });
-} 
- 
+}  
 
   // A custom item. Inside the onPress callback we can call into PSPDFKit APIs.
   toolbarItems.push({
@@ -99,12 +115,27 @@ if (!isMobile) {
     title: "Submit Changes",
     onPress: function () {
 
-      if (window.confirm("Are you sure you want to submit changes?\r\n\r\nThe marked up preplan will be attached to your Workforce assignment and this page will close.")) {
+      if (window.confirm("Are you sure you want to submit changes?\r\n\r\nThe marked up preplan will be attached to your Workforce assignment and this copy will be deleted.")) {
         ArcGISHelper.attatchPDFtoAssignment(instance, defaultConfiguration.objectId, defaultConfiguration.preplanId).then((response) => {
           if (response.ok) {
-            window.open("arcgis-workforce://");
-            window.close();
-            //TODO Delete copy in azure           
+
+            fetch(
+              `/api/Preplan`,
+              { 
+                method: 'DELETE', 
+                headers: { 
+                    'Content-type': 'application/json'              
+                  },
+                body: {
+                  fileName : defaultConfiguration.preplanId + '.pdf'
+                }
+              }  
+            ).then(()=>{
+              if(isMobile){
+                window.open("arcgis-workforce://");
+              }          
+              window.close();
+            });       
           }
           else {
             alert("Error. Please try submitting again. If the error persists, contact IT Helpdesk");
@@ -122,15 +153,29 @@ if (!isMobile) {
     onPress: function () {
       if (window.confirm("Are you sure you want to exit with no changes?")) {
        // window.location.assign("arcgis-workforce://");
-        window.open("arcgis-workforce://");
+
+       fetch(
+        `/api/Preplan`,
+        { 
+          method: 'DELETE', 
+          headers: { 
+              'Content-type': 'application/json'              
+            },
+          body: {
+            fileName : defaultConfiguration.preplanId + '.pdf'
+          }
+        }  
+      ).then(()=>{
+        if(isMobile){
+          window.open("arcgis-workforce://");
+        }          
         window.close();
-      
+      }); 
       }
     }
   });
 
-  // Initialize a new PSPDFKit Viewer with the initial view state and custom
-  // stylesheets.
+  // Initialize a new PSPDFKit Viewer with the initial view state and custom stylesheets.
   return PSPDFKit.load({
     ...defaultConfiguration,
     toolbarItems: toolbarItems,
@@ -138,9 +183,7 @@ if (!isMobile) {
     styleSheets: ["/drag-and-drop/static/style.css"],
     annotationTooltipCallback,
   }).then((_instance) => {
-    instance = _instance;
-
-    
+    instance = _instance;    
 
     // We only allow dropping elements onto a PDF page.
     instance.contentDocument.ondragover = function (event) {
@@ -180,8 +223,7 @@ if (!isMobile) {
 // page.
 function handleExternalDrop(event, pageIndex) {
   const file = event.dataTransfer.files[0];
-  const allowedExternalMimeTypes = ["image/jpeg", "image/png"];
-  
+  const allowedExternalMimeTypes = ["image/jpeg", "image/png"];  
 
   if (!allowedExternalMimeTypes.includes(file.type)) {
     return;

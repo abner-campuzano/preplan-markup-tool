@@ -48,13 +48,13 @@ export async function uploadBlob(
     blobServiceClient
   );
   const blockBlobClient = await containerClient.getBlockBlobClient(fileName);
-  try{
+  try {
     const response = await blockBlobClient.uploadData(blob);
   }
-  catch(e){
+  catch (e) {
     return e;
   }
-  
+
 
   return response.errorCode;
 }
@@ -141,14 +141,46 @@ export const blobExists = async (
       data: []
     };
   }
-  const blobServiceClient = getBlobServiceClient(serviceName, serviceKey);  
-  const containerClient = blobServiceClient.getContainerClient(containerName); 
+  const blobServiceClient = getBlobServiceClient(serviceName, serviceKey);
+  const containerClient = blobServiceClient.getContainerClient(containerName);
 
-    // Get a reference to a blob
+  // Get a reference to a blob
   const blobClient = containerClient.getBlobClient(blobName);
 
-    // Check if the blob exists
+  // Check if the blob exists
   const blobExists = await blobClient.exists();
 
-  return blobExists;  
+  return blobExists;
 };
+
+export const deleteBlobIfItExists = async (
+  serviceName,
+  serviceKey,
+  containerName,
+  blobName) => {
+
+  if (!serviceName || !serviceKey || !containerName || !blobName) {
+    return {
+      error: true,
+      errorMessage: 'deleteBlobIfItExists function missing parameters'
+    };
+  }
+
+  // include: Delete the base blob and all of its snapshots.
+  // only: Delete only the blob's snapshots and not the blob itself.
+  const options = {
+    deleteSnapshots: 'include' // or 'only'
+  }
+
+  const blobServiceClient = getBlobServiceClient(serviceName, serviceKey);
+  const containerClient = await createContainer(
+    containerName,
+    blobServiceClient
+  );
+
+  // Create blob client from container client
+  const blockBlobClient = await containerClient.getBlockBlobClient(blobName);
+
+  const resp = await blockBlobClient.deleteIfExists(options);
+  return resp;
+}

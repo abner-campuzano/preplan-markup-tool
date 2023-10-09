@@ -16,8 +16,10 @@ const ArcGISHelper = {
         const blob = new Blob([arrayBuffer], { type: 'application/pdf' });
         console.log(blob);
         const formData = new FormData();
+        const date = new Date();
+        const fileName = `${preplanId}_${date.getDate()}_${date.getDay()}_${date.getHours()}:${date.getMinutes}:${date.getSeconds}().pdf`;
         formData.append("token", await this.getToken());
-        formData.append("attachment", blob, preplanId + "(reviewed).pdf");
+        formData.append("attachment", blob, fileName);
         formData.append("multipart", true);
         formData.append("f", "json");
         return await fetch(
