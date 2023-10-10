@@ -118,7 +118,7 @@ if (!isMobile) {
     title: "Submit Changes",
     onPress: function () {
 
-      if (window.confirm("Are you sure you want to submit changes?\r\n\r\nThe marked up preplan will be attached to your Workforce assignment and this copy will be deleted.")) {
+      if (window.confirm("Are you sure you want to submit changes?\r\n\r\nThe marked up preplan will be attached to your Workforce assignment.")) {
         ArcGISHelper.attatchPDFtoAssignment(instance, defaultConfiguration.objectId, defaultConfiguration.preplanId).then((response) => {
           if (response.ok) {
 
