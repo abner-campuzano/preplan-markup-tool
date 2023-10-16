@@ -23,7 +23,7 @@ export default function PdfViewerComponent(props) {
         onIdle,
         onActive,
         onAction,
-        timeout: 30_000,// 30seconds
+        timeout: 300_000,// 30seconds
         throttle: 500
     });
 
