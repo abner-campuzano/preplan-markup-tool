@@ -11,8 +11,8 @@ export default async function (context, req) {
     formData.append("expiration", "60")
     formData.append("f", "json");
     try {
-
-       const {data} =  await axios.post("https://gis.southmetro.org/portal/sharing/rest/generateToken",formData);
+        
+        const {data} =  await axios.post("https://gis.southmetro.org/portal/sharing/rest/generateToken",formData);
         context.log(' No done Response');
         context.log(data);        
         context.res = {

@@ -24,7 +24,6 @@ const ArcGISHelper = {
             `https://gis.southmetro.org/arcgis/rest/services/Hosted/workforce_9bce7612ad40407881aefb4d6ced6232/FeatureServer/0/${objectId}/addAttachment`,
             {
                 method: "POST",
-                referrerPolicy: "same-origin",
                 body: formData
             });
     }
