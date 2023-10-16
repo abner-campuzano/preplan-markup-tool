@@ -8,7 +8,7 @@ export default async function (context, req) {
     formData.append("password", "GIS9195Smfr");
     formData.append("client", "referer");
     formData.append("referer", "https://ambitious-sand-0bf74c810-1.centralus.1.azurestaticapps.net");//https://ambitious-sand-0bf74c810.1.azurestaticapps.net
-    formData.append("expiration", "10160")
+    formData.append("expiration", "60")
     formData.append("f", "json");
     try {
 
