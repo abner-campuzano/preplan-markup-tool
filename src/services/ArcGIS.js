@@ -9,10 +9,8 @@ const ArcGISHelper = {
 
     attatchPDFtoAssignment: async function (instance, objectId, preplanId) {
 
-        const arrayBuffer = await instance.exportPDF();
-        console.log(arrayBuffer);
-        const blob = new Blob([arrayBuffer], { type: 'application/pdf' });
-        console.log(blob);
+        const arrayBuffer = await instance.exportPDF();       
+        const blob = new Blob([arrayBuffer], { type: 'application/pdf' });        
         const formData = new FormData();
         const date = new Date();
         const fileName = `${preplanId}_${date.getDate()}_${date.getDay()}_${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}.pdf`;

@@ -21,6 +21,8 @@ export default async function (context, req) {
             const environmentVariables = process.env;
     
             const fileName = req.body.fileName;
+
+            console.info(fileName);
     
             if(fileName){
                 var response = await deleteBlobIfItExists(
@@ -37,14 +39,14 @@ export default async function (context, req) {
             }
             context.res = {
                 status: response.succeeded ? 200 : 500 ,
-                body: {response} 
+                body: {req} 
             }
             
     
         } catch (error) {
             context.res = {
                 status: 500, /* Defaults to 200 */
-                body: { error, req }
+                body: { req }
             };
         }
     }    

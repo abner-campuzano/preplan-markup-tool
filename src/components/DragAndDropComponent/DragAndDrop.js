@@ -27,48 +27,49 @@ export function load(defaultConfiguration) {
     sidebarPlacement: PSPDFKit.SidebarPlacement.END,
   });
 
- //AUTO SAVE  
-   setInterval(async () => {
-    if(instance){
+  //AUTO SAVE  
+  const autosaveInterval = setInterval(async () => {
+    if (instance) {
       const arrayBuffer = await instance.exportPDF();
-      const preplanId = defaultConfiguration.preplanId;    
-  
+      const preplanId = defaultConfiguration.preplanId;
+
       //get SAS URL with w permissions
-      const data = await fetch(`/api/GenerateSAS?fileName=${preplanId}.pdf&permissions=w`);    
-      const dataJson = await data.json(); 
+      const data = await fetch(`/api/GenerateSAS?fileName=${preplanId}.pdf&permissions=w`);
+      const dataJson = await data.json();
       const sasTokenUrl = dataJson.url
-  
+
       //Upload blob  
       const blockBlobClient = new BlockBlobClient(sasTokenUrl);
       //console.log(blockBlobClient);
       await blockBlobClient.uploadData(arrayBuffer);
-    }     
+    }
 
-   }, 60 * 200); // runs in miliseconds
+  }, 60 * 200); // runs in miliseconds
 
   //Customize Toolbar
   const toolbarItems = PSPDFKit.defaultToolbarItems.filter((item) => {
     return /\b(sidebar-thumbnails|zoom-in|zoom-out|text|note)\b/.test(
       item.type
     );
-  }); 
+  });
 
   toolbarItems.push({
     type: "spacer",
   });
 
- //NEEDS CLEANUP 
+  //NEEDS CLEANUP 
   const regex = /Mobi|Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i;
   const isMobile = regex.test(navigator.userAgent);
 
-if (!isMobile) {
-   //DOWNLOAD LOCAL
-   toolbarItems.push({
-    type: "custom",
-    id: "download-pdf",
-    title: "Download",
-    onPress: () => {
-      instance.exportPDF().then((buffer) => {
+  if (!isMobile) {
+    //DOWNLOAD LOCAL
+    toolbarItems.push({
+      type: "custom",
+      id: "download-pdf",
+      title: "Download",
+      onPress: async () => {
+        const buffer = await instance.exportPDF()
+
         const blob = new Blob([buffer], { type: "application/pdf" });
         const date = new Date();
         const fileName = `${defaultConfiguration.preplanId}_${date.getDate()}_${date.getDay()}_${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}.pdf`;
@@ -86,99 +87,91 @@ if (!isMobile) {
           document.body.removeChild(a);
         }
 
-        fetch(
+        clearInterval(autosaveInterval);
+        const fileNameBlob = { fileName: defaultConfiguration.preplanId + '.pdf' };
+        var res = await fetch(
           `/api/Preplan`,
-          { 
-            method: 'DELETE', 
-            headers: { 
-                'Content-type': 'application/json'              
-              },
-            body: {
-              fileName : defaultConfiguration.preplanId + '.pdf'
-            }
-          }  
-        ).then(()=>{
-          if(isMobile){
-            window.open("arcgis-workforce://");
-            window.close();
-
+          {
+            method: 'DELETE',
+            headers: {
+              'Content-type': 'application/json'
+            },
+            body: JSON.stringify(fileNameBlob)
           }
-          window.open("about:blank", "_self");          
+        );
+        if (isMobile) {
+          window.open("arcgis-workforce://");
           window.close();
-        });       
-      });
-    }
-  });
-}  
+        }
+        window.open("about:blank", "_self");
+        window.close();
+      }
+    });
+  }
 
   // A custom item. Inside the onPress callback we can call into PSPDFKit APIs.
   toolbarItems.push({
     type: "custom",
     id: "my-custom-button",
     title: "Submit Changes",
-    onPress: function () {
+    onPress: async function () {
 
       if (window.confirm("Are you sure you want to submit changes?\r\n\r\nThe marked up preplan will be attached to your Workforce assignment.")) {
-        ArcGISHelper.attatchPDFtoAssignment(instance, defaultConfiguration.objectId, defaultConfiguration.preplanId).then((response) => {
-          if (response.ok) {
 
-            fetch(
-              `/api/Preplan`,
-              { 
-                method: 'DELETE', 
-                headers: { 
-                    'Content-type': 'application/json'              
-                  },
-                body: {
-                  fileName : defaultConfiguration.preplanId + '.pdf'
-                }
-              }  
-            ).then(()=>{
-              if(isMobile){
-                window.open("arcgis-workforce://");
-                window.close();
-              }                       
-              window.open("about:blank", "_self");          
-              window.close();
-            });       
+        await ArcGISHelper.attatchPDFtoAssignment(instance, defaultConfiguration.objectId, defaultConfiguration.preplanId);
+
+        //if (response.ok) {
+        clearInterval(autosaveInterval);
+        const fileName = { fileName: defaultConfiguration.preplanId + '.pdf' };
+        var res = await fetch(
+          `/api/Preplan`,
+          {
+            method: 'DELETE',
+            headers: {
+              'Content-type': 'application/json'
+            },
+            body: JSON.stringify(fileName)
           }
-          else {
-            alert("Error. Please try submitting again. If the error persists, contact IT Helpdesk");
-          }
-        }
         );
+        if (isMobile) {
+          window.open("arcgis-workforce://");
+          window.close();
+        }
+        window.open("about:blank", "_self");
+        window.close();
+        // }
+        // else {
+        //   alert("Error. Please try submitting again. If the error persists, contact IT Helpdesk");
+        // }
       }
     }
   });
-  
+
   toolbarItems.push({
     type: "custom",
     id: "my-custom-button2",
     title: "No Changes",
-    onPress: function () {
+    onPress: async function () {
       if (window.confirm("Are you sure you want to exit with no changes?")) {
-       // window.location.assign("arcgis-workforce://");
-
-       fetch(
-        `/api/Preplan`,
-        { 
-          method: 'DELETE', 
-          headers: { 
-              'Content-type': 'application/json'              
+        // window.location.assign("arcgis-workforce://");
+        clearInterval(autosaveInterval);
+        const fileName = {fileName : defaultConfiguration.preplanId + '.pdf'};
+        var res = await fetch(
+          `/api/Preplan`,
+          {
+            method: 'DELETE',
+            headers: {
+              'Content-type': 'application/json'
             },
-          body: {
-            fileName : defaultConfiguration.preplanId + '.pdf'
+            body: JSON.stringify(fileName)
           }
-        }  
-      ).then(()=>{
-        if(isMobile){
+        );
+        if (isMobile) {
           window.open("arcgis-workforce://");
           window.close();
-
         }
-        window.open("about:blank", "_self");          
+        window.open("about:blank", "_self");
         window.close();
-      }); 
       }
     }
   });
@@ -191,7 +184,7 @@ if (!isMobile) {
     styleSheets: ["/drag-and-drop/static/style.css"],
     annotationTooltipCallback,
   }).then((_instance) => {
-    instance = _instance;    
+    instance = _instance;
 
     // We only allow dropping elements onto a PDF page.
     instance.contentDocument.ondragover = function (event) {
@@ -212,9 +205,7 @@ if (!isMobile) {
 
       if (pageElement) {
         const pageIndex = parseInt(pageElement.dataset.pageIndex);
-
         const isExternalDrop = event.dataTransfer.files.length > 0;
-
         if (isExternalDrop) {
           handleExternalDrop(event, pageIndex);
         } else {
@@ -222,7 +213,6 @@ if (!isMobile) {
         }
       }
     };
-
     return instance;
   });
 }
@@ -231,7 +221,7 @@ if (!isMobile) {
 // page.
 function handleExternalDrop(event, pageIndex) {
   const file = event.dataTransfer.files[0];
-  const allowedExternalMimeTypes = ["image/jpeg", "image/png"];  
+  const allowedExternalMimeTypes = ["image/jpeg", "image/png"];
 
   if (!allowedExternalMimeTypes.includes(file.type)) {
     return;
@@ -276,7 +266,7 @@ function handleInternalDrop(event, pageIndex) {
   // We know that internal drag and drop objects will have the cursor on the
   // top left left side of the box. We also know the dimensions of the
   // rectangles.
- 
+
   const clientRect = new PSPDFKit.Geometry.Rect({
     left: event.clientX,
     top: event.clientY,
@@ -389,7 +379,7 @@ async function insertTextAnnotation(pageRect, text, pageIndex, fontSize) {
     text,
     pageIndex,
     fontSize,
-    fontColor:PSPDFKit.Color.PURPLE,
+    fontColor: PSPDFKit.Color.PURPLE,
     horizontalAlign: "center",
     verticalAlign: "center",
     backgroundColor: PSPDFKit.Color.WHITE,
@@ -435,42 +425,42 @@ function annotationTooltipCallback(annotation) {
     },
   };
   if (annotation instanceof PSPDFKit.Annotations.ImageAnnotation) {
-  const rotateLeft = {
-    type: "custom",
-    title: "Rotate Left",
-    onPress: async () => {
-      
-      let currentRotationVal = annotation.rotation;      
+    const rotateLeft = {
+      type: "custom",
+      title: "Rotate Left",
+      onPress: async () => {
 
-      if (currentRotationVal === 270) {
-        const updatedAnnotation = annotation.set("rotation", 0);
-        await instance.update(updatedAnnotation);
-      }
-      else {
-        const updatedAnnotation = annotation.set("rotation", currentRotationVal + 90);
-        await instance.update(updatedAnnotation);
-      }
-    },
-  };
+        let currentRotationVal = annotation.rotation;
 
-  const rotateRight = {
-    type: "custom",
-    title: "Rotate Right",
-    onPress: async () => {
-      let currentRotationVal = annotation.rotation; 
+        if (currentRotationVal === 270) {
+          const updatedAnnotation = annotation.set("rotation", 0);
+          await instance.update(updatedAnnotation);
+        }
+        else {
+          const updatedAnnotation = annotation.set("rotation", currentRotationVal + 90);
+          await instance.update(updatedAnnotation);
+        }
+      },
+    };
 
-      if (currentRotationVal === 0) {
-        const updatedAnnotation = annotation.set("rotation", 270);
-        await instance.update(updatedAnnotation);
-      }
-      else {
-        const updatedAnnotation = annotation.set("rotation", currentRotationVal - 90);
-        await instance.update(updatedAnnotation);
-      }
-    },
-  };
-  return [rotateLeft, rotateRight];
-}
+    const rotateRight = {
+      type: "custom",
+      title: "Rotate Right",
+      onPress: async () => {
+        let currentRotationVal = annotation.rotation;
+
+        if (currentRotationVal === 0) {
+          const updatedAnnotation = annotation.set("rotation", 270);
+          await instance.update(updatedAnnotation);
+        }
+        else {
+          const updatedAnnotation = annotation.set("rotation", currentRotationVal - 90);
+          await instance.update(updatedAnnotation);
+        }
+      },
+    };
+    return [rotateLeft, rotateRight];
+  }
 
   if (annotation instanceof PSPDFKit.Annotations.TextAnnotation) {
     const increaseFontSize = {
@@ -498,7 +488,7 @@ function annotationTooltipCallback(annotation) {
     };
 
     return [increaseFontSize, decreaseFontSize, deleteAnnotation];
-  } 
+  }
 }
 
 // Given a File object, we can create an <image/> tag to parse the image and
@@ -549,7 +539,7 @@ const tools = [
 // We do this so that we can show the sidebar and fill it with some example
 // tools.
 
-export const CustomContainer = React.forwardRef((instance, ref) => ( 
+export const CustomContainer = React.forwardRef((instance, ref) => (
   <div className="splitPane">
     <div className="splitPane-left">
       {tools.map((tool) => {
