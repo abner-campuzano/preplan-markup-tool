@@ -89,7 +89,7 @@ export function load(defaultConfiguration) {
 
         clearInterval(autosaveInterval);
         const fileNameBlob = { fileName: defaultConfiguration.preplanId + '.pdf' };
-        var res = await fetch(
+        await fetch(
           `/api/Preplan`,
           {
             method: 'DELETE',
@@ -123,7 +123,7 @@ export function load(defaultConfiguration) {
         //if (response.ok) {
         clearInterval(autosaveInterval);
         const fileName = { fileName: defaultConfiguration.preplanId + '.pdf' };
-        var res = await fetch(
+        await fetch(
           `/api/Preplan`,
           {
             method: 'DELETE',
@@ -156,7 +156,7 @@ export function load(defaultConfiguration) {
         // window.location.assign("arcgis-workforce://");
         clearInterval(autosaveInterval);
         const fileName = {fileName : defaultConfiguration.preplanId + '.pdf'};
-        var res = await fetch(
+        await fetch(
           `/api/Preplan`,
           {
             method: 'DELETE',
