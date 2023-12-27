@@ -116,15 +116,14 @@ export function load(defaultConfiguration) {
     title: "Submit Changes",
     onPress: async function () {
 
-      if (window.confirm("Are you sure you want to submit changes?\r\n\r\nThe marked up preplan will be attached to your Workforce assignment.")) {
+      if (window.confirm("Are you sure you want to submit changes?\r\n\r\nThe marked up preplan will be attached to your Workforce assignment.\r\n\r\n DESKTOP USERS: After Submitting changes, navigate to the Preplan Administrative App to complete the assignment.")) {
         try{
           await ArcGISHelper.attatchPDFtoAssignment(instance, defaultConfiguration.objectId, defaultConfiguration.preplanId);
         }
         catch(error)
         {
           console.log(error);
-        }
-        
+        }        
 
         //if (response.ok) {
         clearInterval(autosaveInterval);
