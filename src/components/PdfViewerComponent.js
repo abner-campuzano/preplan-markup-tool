@@ -75,7 +75,7 @@ export default function PdfViewerComponent(props) {
 
 }
 const getPSPDFKITKey = async function(){
-    const data = await fetch(`/api/GenerateSAS?fileName=${preplanId}.pdf&permissions=r`);
+    const data = await fetch(`/api/PSPDFKit`);
     const dataJson = await data.json();
 
 
