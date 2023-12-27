@@ -117,8 +117,14 @@ export function load(defaultConfiguration) {
     onPress: async function () {
 
       if (window.confirm("Are you sure you want to submit changes?\r\n\r\nThe marked up preplan will be attached to your Workforce assignment.")) {
-
-        await ArcGISHelper.attatchPDFtoAssignment(instance, defaultConfiguration.objectId, defaultConfiguration.preplanId);
+        try{
+          await ArcGISHelper.attatchPDFtoAssignment(instance, defaultConfiguration.objectId, defaultConfiguration.preplanId);
+        }
+        catch(error)
+        {
+          console.log(error);
+        }
+        
 
         //if (response.ok) {
         clearInterval(autosaveInterval);
@@ -508,30 +514,29 @@ function parseImageDimensions(file, onDimensions) {
 const tools = [
   { type: "image", filename: "drag-and-drop/preplan_icons/1.png" },
   { type: "image", filename: "drag-and-drop/preplan_icons/2.png" },
-  { type: "image", filename: "drag-and-drop/preplan_icons/3.png" },
-  { type: "image", filename: "drag-and-drop/preplan_icons/6.png" },
-  { type: "image", filename: "drag-and-drop/preplan_icons/10.jpg" },
-  { type: "image", filename: "drag-and-drop/preplan_icons/14.png" },
-  { type: "image", filename: "drag-and-drop/preplan_icons/15.png" },
-  { type: "image", filename: "drag-and-drop/preplan_icons/16.png" },
-  { type: "image", filename: "drag-and-drop/preplan_icons/17.png" },
-  { type: "image", filename: "drag-and-drop/preplan_icons/18.png" },
-  { type: "image", filename: "drag-and-drop/preplan_icons/19.png" },
-  { type: "image", filename: "drag-and-drop/preplan_icons/20.png" },
-  { type: "image", filename: "drag-and-drop/preplan_icons/22.png" },
-  { type: "image", filename: "drag-and-drop/preplan_icons/24.png" },
-  { type: "image", filename: "drag-and-drop/preplan_icons/25.png" },
-  { type: "image", filename: "drag-and-drop/preplan_icons/26.png" },
-  { type: "image", filename: "drag-and-drop/preplan_icons/27.png" },
-  { type: "image", filename: "drag-and-drop/preplan_icons/28.png" },
-  { type: "image", filename: "drag-and-drop/preplan_icons/29.png" },
-  { type: "image", filename: "drag-and-drop/preplan_icons/30.png" },
-  { type: "image", filename: "drag-and-drop/preplan_icons/34.png" },
-  { type: "image", filename: "drag-and-drop/preplan_icons/35.png" },
-  { type: "image", filename: "drag-and-drop/preplan_icons/36.jpg" },
-  { type: "image", filename: "drag-and-drop/preplan_icons/37.png" },
-  { type: "image", filename: "drag-and-drop/preplan_icons/38.png" },
-  { type: "image", filename: "drag-and-drop/preplan_icons/39.png" }
+  { type: "image", filename: "drag-and-drop/preplan_icons/FAP.png" },
+  { type: "image", filename: "drag-and-drop/preplan_icons/SPV.png" },
+  { type: "image", filename: "drag-and-drop/preplan_icons/ANN.png" },
+  { type: "image", filename: "drag-and-drop/preplan_icons/K.png" },
+  { type: "image", filename: "drag-and-drop/preplan_icons/G.png" },
+  { type: "image", filename: "drag-and-drop/preplan_icons/E.png" },
+  { type: "image", filename: "drag-and-drop/preplan_icons/W.png" },
+  { type: "image", filename: "drag-and-drop/preplan_icons/GEN.png" },
+  { type: "image", filename: "drag-and-drop/preplan_icons/HVAC.png" },
+  { type: "image", filename: "drag-and-drop/preplan_icons/ELV.png" },
+  { type: "image", filename: "drag-and-drop/preplan_icons/R.png" },
+  { type: "image", filename: "drag-and-drop/preplan_icons/A.png" },
+  { type: "image", filename: "drag-and-drop/preplan_icons/SINGLEDOOR.png" },
+  { type: "image", filename: "drag-and-drop/preplan_icons/DOUBLEDOOR.jpg" },
+  { type: "image", filename: "drag-and-drop/preplan_icons/STAIRS.png" },
+  { type: "image", filename: "drag-and-drop/preplan_icons/WALL.png" },
+  { type: "image", filename: "drag-and-drop/preplan_icons/DIAMOND.png" },
+  { type: "image", filename: "drag-and-drop/preplan_icons/FP.png" },
+  { type: "image", filename: "drag-and-drop/preplan_icons/DSTP.png" },
+  { type: "image", filename: "drag-and-drop/preplan_icons/WSTP.png" },
+  { type: "image", filename: "drag-and-drop/preplan_icons/PIV.png" },
+  { type: "image", filename: "drag-and-drop/preplan_icons/SKYLIGHT.png" },
+  { type: "image", filename: "drag-and-drop/preplan_icons/SOLARPANEL.png" }
 ];
 
 // By exporting a CustomContainer, we can customize the HTML structure that is

@@ -23,7 +23,7 @@ export default function PdfViewerComponent(props) {
         onIdle,
         onActive,
         onAction,
-        timeout: 300_000,// 30seconds
+        timeout: 3600000,// in milliseconds
         throttle: 500
     });
 
@@ -76,7 +76,7 @@ const getDocumentURL = async function (preplanId) {
     const data = await fetch(`/api/GenerateSAS?fileName=${preplanId}.pdf&permissions=r`);
     const dataJson = await data.json();
     if (dataJson.preplanInprogressExists) {
-        if (window.confirm("Preplan is being edited by someone else. Do you want to take over? Editing on multiple devices at the same time will sync issues.")) {
+        if (window.confirm("Preplan is being edited by someone else. Do you want to take over? Editing on multiple devices at the same time will cause sync issues.")) {
             return dataJson.url;
         }
         else{
