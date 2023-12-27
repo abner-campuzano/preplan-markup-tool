@@ -35,10 +35,13 @@ export default function PdfViewerComponent(props) {
             const docURL = await getDocumentURL(props.preplanId);
             // console.log("UE PdfViewerComponent");
 
+            const pspdfkitKey = await getPSPDFKITKey();          
+
             if (docURL === "") {
                 onIdle();
             } else {
                 await load({
+                    licenseKey: pspdfkitKey,
                     // Container where PSPDFKit should be mounted.
                     container,
                     // The document to open.
@@ -70,6 +73,14 @@ export default function PdfViewerComponent(props) {
         <CustomContainer ref={containerRef} />
     );
 
+}
+const getPSPDFKITKey = async function(){
+    const data = await fetch(`/api/GenerateSAS?fileName=${preplanId}.pdf&permissions=r`);
+    const dataJson = await data.json();
+
+
+
+    return dataJson.key;
 }
 
 const getDocumentURL = async function (preplanId) {

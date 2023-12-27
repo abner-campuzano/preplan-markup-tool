@@ -62,7 +62,8 @@ export default async function (context, req) {
                     permissions,
                     timerange
                 );
-            }
+            }          
+
             context.res = {
                 // status: 200, /* Defaults to 200 */
                 body: { url, preplanInprogressExists }
