@@ -86,15 +86,18 @@ const getPSPDFKITKey = async function(){
 const getDocumentURL = async function (preplanId) {
     const data = await fetch(`/api/GenerateSAS?fileName=${preplanId}.pdf&permissions=r`);
     const dataJson = await data.json();
-    if (dataJson.preplanInprogressExists) {
-        if (window.confirm("Preplan is being edited by someone else. Do you want to take over? Editing on multiple devices at the same time will cause sync issues.")) {
-            return dataJson.url;
-        }
-        else{
-            window.location.replace("")
-        }
-    }
-    else {
-        return dataJson.url;
-    }
+
+    return dataJson.url;
+
+    // if (dataJson.preplanInprogressExists) {
+    //     if (window.confirm("Preplan is being edited by someone else. Do you want to take over? Editing on multiple devices at the same time will cause sync issues.")) {
+    //         return dataJson.url;
+    //     }
+    //     else{
+    //         window.location.replace("")
+    //     }
+    // }
+    // else {
+    //     return dataJson.url;
+    // }
 }
